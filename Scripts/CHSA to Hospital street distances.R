@@ -364,7 +364,30 @@ all.trips.nogeo %>%
             dist.mean = mean(distance),
             dur.mean.w = weighted.mean(duration, CHSA_popweight),
             dur.mean = weighted.mean(duration))
-  
+
+# summary by CHSA urban/rural class
+## Urban/Rural Class summary (1-7)
+all.trips.nogeo %>%
+    group_by(CHSA_UR_Cl) %>%
+    summarise(dist=mean(distance))
+## Urban/Rural only split
+all.trips.nogeo <- all.trips.nogeo %>%
+    mutate (UR = case_when(
+      startsWith(CHSA_UR_Cl, "1") ~ "Urban",
+      startsWith(CHSA_UR_Cl, "2") ~ "Urban",
+      startsWith(CHSA_UR_Cl, "3") ~ "Urban",
+      startsWith(CHSA_UR_Cl, "4") ~ "Urban",
+      startsWith(CHSA_UR_Cl, "5") ~ "Rural",
+      startsWith(CHSA_UR_Cl, "6") ~ "Rural",
+      startsWith(CHSA_UR_Cl, "7") ~ "Rural"
+      ))
+all.trips.nogeo %>%
+    group_by(UR) %>%
+    summarise(mean(distance)) 
+all.trips.nogeo %>%
+    group_by(UR) %>%
+    summarise(mean(duration))
+
 # boxplot
 all.trips.nogeo %>% 
   bind_rows(all.trips.nogeo %>% mutate(HA_Name = 'COMBINED')) %>% 
