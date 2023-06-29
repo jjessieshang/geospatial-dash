@@ -9,7 +9,7 @@ app = Dash(__name__)
 
 # ------------------------------------------------------------------------------
 # import, clean, and process data
-df = pd.read_csv("intro_bees.csv")
+df = pd.read_csv("dummy.csv")
 df = df.groupby(['State', 'ANSI', 'Affected by', 'Year', 'state_code'])[['Pct of Colonies Impacted']].mean()
 df.reset_index(inplace=True)
 print(df[:5]),
