@@ -1,0 +1,10 @@
+name: env_dash_1_8_0
+dependencies:
+  - python=3.8.0
+  - pip
+  - pip:
+    - numpy==1.24.3
+    - pandas==2.0.2
+    - plotly==5.15.0
+    - dash==2.10.2
+    - gunicorn==20.1.0

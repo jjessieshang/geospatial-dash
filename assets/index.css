@@ -1,0 +1,46 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700&family=Karla:ital,wght@1,200&family=Kumbh+Sans:wght@400;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Mulish:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Raleway:wght@100;200;300&display=swap');
+
+div {
+    box-sizing: border-box;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  } 
+
+/* website layout */
+.main-content {
+    width: 95%;
+    margin: auto;
+    padding-bottom: 50px;
+}
+
+.column1 {
+    float: left;
+    width: 40%;
+    padding:0 2rem;
+}
+
+.column2 {
+    float: left;
+    width: 60%;
+    padding:0 2rem;
+}
+
+.main-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+    }
+}
+
+.slct-age {
+    padding: .5rem 0;
+}
+
+/* .polar {
+    height: fit-content;
+} */
