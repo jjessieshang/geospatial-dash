@@ -18,4 +18,4 @@ Anaconda Navigator
 4. open `intro.py`
 5. run the python file 
 
-App will be exposed on port 443
+App will be exposed on port 8050

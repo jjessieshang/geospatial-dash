@@ -12,7 +12,11 @@ app = Dash(__name__)
 df = pd.read_csv("dummy.csv")
 df = df.groupby(['State', 'ANSI', 'Affected by', 'Year', 'state_code'])[['Pct of Colonies Impacted']].mean()
 df.reset_index(inplace=True)
-print(df[:5]),
+# print(df[:5]),
+
+df2 = pd.read_csv("data/P&F Costs Data/P&F-Costs-Simplfied.csv", delimiter=",", encoding="utf-8", header=0)
+df.reset_index(inplace=True)
+print(df2.head()),
 
 #sample table data
 data = OrderedDict(
@@ -55,14 +59,15 @@ app.layout = html.Div(className="main-content", children=[
                     children=["Choose a health authority and age group from the list below to view costs"]),
             # dropdown menus
             html.Label(className="select-label", children="Select a Health Authority"),
-            dcc.Dropdown(className="slct_age", id="slct_year",
+            dcc.Dropdown(className="slct_ha", id="slct_ha",
             options=[
-                {"label": "2015", "value": 2015},
-                {"label": "2016", "value": 2016},
-                {"label": "2017", "value": 2017},
-                {"label": "2018", "value": 2018}],
+                {"label": "Northern", "value": "Northern"},
+                {"label": "Interior", "value": "Interior"},
+                {"label": "Vancouver Coastal", "value": "Vancouver Coastal"},
+                {"label": "Fraser", "value": "Fraser"},
+                {"label": "Vancouver Island", "value": "Vancouver Island"}],
             multi=False,
-            value=2015,
+            value="Vancouver Island",
             ),
             html.Label(className="select-label", children="Select an Age Group"),
             dcc.Dropdown(className="slct-age", id="slct-age",
@@ -79,25 +84,28 @@ app.layout = html.Div(className="main-content", children=[
             html.Div(className="cost-summary", children=[
                 html.H1("Cost of Care Summary"),
                 html.Label(className="select-label", children="Method of Care Cost Breakdown"),
-                dcc.Dropdown(className="slct-cost-type", id="slct-cost-type",
+                dcc.Dropdown(className="slct-service-type", id="slct-service-type",
                 options=[
-                    {"label": "Emergency Visit", "value": 2015},
-                    {"label": "Family Doctor", "value": 2016},
-                    {"label": "Virtual Care", "value": 2017},],
+                    {"label": "Emergency Care", "value": "emergency"},
+                    {"label": "Family Doctor", "value": "family medicine"},
+                    {"label": "Virtual Care", "value": "virtual"},],
                 multi=False,
-                value=2015,
+                value="virtual",
                 ),
                 html.Br(),
+                # tb = df2.copy(), 
+                # tb = tb[tb["service_type"] == option_slctd]
+                # dff = dff[dff["Affected by"] == "Varroa_mites"]
                 dash_table.DataTable(
-                    data=df.to_dict('records'),
-                    columns=[{'id': c, 'name': c} for c in df.columns],
-                    style_cell={'textAlign': 'left'},
-                    style_cell_conditional=[
-                        {
-                            'if': {'column_id': 'Region'},
-                            'textAlign': 'left'
-                        }
-                    ],
+                    id="datatable",
+                    # columns=[{'id': c, 'name': c} for c in df2.columns],
+                    # style_cell={'textAlign': 'left'},
+                    # style_cell_conditional=[
+                    #     {
+                    #         'if': {'column_id': 'Region'},
+                    #         'textAlign': 'left'
+                    #     }
+                    # ],
                     style_table={'height': '550px', 'overflowY': 'auto'}
                 ),
 
@@ -151,6 +159,25 @@ def update_graph(option_slctd):
         # template='plotly_dark'
     )
     return container, fig
+
+
+@app.callback(
+    Output("datatable", "data"), 
+    [Input(component_id='slct-service-type', component_property='value'),
+     Input(component_id='slct_ha', component_property='value')
+     ]
+)
+def update_table(service_slctd, ha_slctd):
+    print(service_slctd, ha_slctd)
+
+    dff = df2.copy() #always make a copy of df
+    dff =dff[["service_type", "health_authority", "ctas_admit", "age", "cost_value", "lost_productivity", "informal_caregiver","out_of_pocket"]]
+    dff = dff[dff["service_type"] == service_slctd]
+    dff = dff[dff["health_authority"] == ha_slctd]
+    print(dff)
+    return dff.to_dict('records')
+
+
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run_server(debug=True)
