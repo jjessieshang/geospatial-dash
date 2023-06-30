@@ -70,14 +70,13 @@ app.layout = html.Div(className="main-content", children=[
             value="Vancouver Island",
             ),
             html.Label(className="select-label", children="Select an Age Group"),
-            dcc.Dropdown(className="slct-age", id="slct-age",
+            dcc.Dropdown(className="slct_age", id="slct_age",
             options=[
-                {"label": "0-14 years", "value": 2015},
-                {"label": "0-14 years", "value": 2016},
-                {"label": "0-14 years", "value": 2017},
-                {"label": "0-14 years", "value": 2018}],
+                {"label": "0-14 years", "value": "0-14"},
+                {"label": "15-64 years", "value": "15-64"},
+                {"label": "65+ years", "value": "65+"}],
             multi=False,
-            value=2015,
+            value="0-14"
             ),
 
             # cost of care summary
@@ -93,19 +92,8 @@ app.layout = html.Div(className="main-content", children=[
                 value="virtual",
                 ),
                 html.Br(),
-                # tb = df2.copy(), 
-                # tb = tb[tb["service_type"] == option_slctd]
-                # dff = dff[dff["Affected by"] == "Varroa_mites"]
                 dash_table.DataTable(
                     id="datatable",
-                    # columns=[{'id': c, 'name': c} for c in df2.columns],
-                    # style_cell={'textAlign': 'left'},
-                    # style_cell_conditional=[
-                    #     {
-                    #         'if': {'column_id': 'Region'},
-                    #         'textAlign': 'left'
-                    #     }
-                    # ],
                     style_table={'height': '550px', 'overflowY': 'auto'}
                 ),
 
@@ -164,17 +152,23 @@ def update_graph(option_slctd):
 @app.callback(
     Output("datatable", "data"), 
     [Input(component_id='slct-service-type', component_property='value'),
-     Input(component_id='slct_ha', component_property='value')
+     Input(component_id='slct_ha', component_property='value'),
+     Input(component_id='slct_age', component_property='value')
      ]
 )
-def update_table(service_slctd, ha_slctd):
-    print(service_slctd, ha_slctd)
+def update_table(service_slctd, ha_slctd, age_slctd):
 
     dff = df2.copy() #always make a copy of df
     dff =dff[["service_type", "health_authority", "ctas_admit", "age", "cost_value", "lost_productivity", "informal_caregiver","out_of_pocket"]]
+
+    # filter by dropdown inputs
     dff = dff[dff["service_type"] == service_slctd]
     dff = dff[dff["health_authority"] == ha_slctd]
-    print(dff)
+    dff = dff[dff["age"] == age_slctd]
+
+
+    dff = dff.transpose().reset_index()
+    dff = dff.tail(4)
     return dff.to_dict('records')
 
 
