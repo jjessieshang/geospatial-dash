@@ -99,7 +99,6 @@ app.layout = html.Div(className="main-content", children=[
                 dash_table.DataTable(
                     id="datatable",
                     style_table={'height': '550px', 'overflowY': 'auto'},
-                    # columns=[{'Amount($)'}]
                 ),
 
                 html.Div(className="my_rose", children=[]),
@@ -182,7 +181,7 @@ def update_table(service_slctd, ha_slctd, age_slctd):
 
     # new df
     values = ["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]
-    df3 = pd.DataFrame({'Cost Category': values, "Amount ($)": dff2.iloc[:,0].values})
+    df3 = pd.DataFrame({'Cost Category': values, "Amount": dff2.iloc[:,0].values})
 
     # # move sum to end of df
     first_row = df3.head(1)
