@@ -14,8 +14,11 @@ df = df.groupby(['State', 'ANSI', 'Affected by', 'Year', 'state_code'])[['Pct of
 df.reset_index(inplace=True)
 # print(df[:5]),
 
+# costs dataframe preprocessing
 df2 = pd.read_csv("data/P&F Costs Data/P&F-Costs-Simplfied.csv", delimiter=",", encoding="utf-8", header=0)
-df.reset_index(inplace=True)
+df2.reset_index(inplace=True)
+df2 = df2.rename(columns={'lost_productivity': 'Lost Productivity', 'informal_caregiver': 'Informal Caregiver', 'out_of_pocket': 'Out of Pocket', 
+                          'cost_value': 'Total'})
 print(df2.head()),
 
 #sample table data
@@ -82,19 +85,21 @@ app.layout = html.Div(className="main-content", children=[
             # cost of care summary
             html.Div(className="cost-summary", children=[
                 html.H1("Cost of Care Summary"),
-                html.Label(className="select-label", children="Method of Care Cost Breakdown"),
+                html.Label(className="select-label", children="Method of Care"),
                 dcc.Dropdown(className="slct-service-type", id="slct-service-type",
                 options=[
                     {"label": "Emergency Care", "value": "emergency"},
                     {"label": "Family Doctor", "value": "family medicine"},
-                    {"label": "Virtual Care", "value": "virtual"},],
+                    {"label": "Virtual Care", "value": "virtual"},
+                    {"label": "Hospitalization", "value": "hospitalization"},],
                 multi=False,
                 value="virtual",
                 ),
                 html.Br(),
                 dash_table.DataTable(
                     id="datatable",
-                    style_table={'height': '550px', 'overflowY': 'auto'}
+                    style_table={'height': '550px', 'overflowY': 'auto'},
+                    # columns=[{'Amount($)'}]
                 ),
 
                 html.Div(className="my_rose", children=[]),
@@ -149,6 +154,7 @@ def update_graph(option_slctd):
     return container, fig
 
 
+# costs table entries
 @app.callback(
     Output("datatable", "data"), 
     [Input(component_id='slct-service-type', component_property='value'),
@@ -159,17 +165,32 @@ def update_graph(option_slctd):
 def update_table(service_slctd, ha_slctd, age_slctd):
 
     dff = df2.copy() #always make a copy of df
-    dff =dff[["service_type", "health_authority", "ctas_admit", "age", "cost_value", "lost_productivity", "informal_caregiver","out_of_pocket"]]
+    dff =dff[["service_type", "health_authority", "ctas_admit", "age", "Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]]
 
-    # filter by dropdown inputs
+    # filter by service type drop down
     dff = dff[dff["service_type"] == service_slctd]
-    dff = dff[dff["health_authority"] == ha_slctd]
+
+    # filter by health authority dropdown, non specific for virtual care
+    if (service_slctd != "virtual") :
+        dff = dff[dff["health_authority"] == ha_slctd]
+
+    # filter by age category dropdown
     dff = dff[dff["age"] == age_slctd]
 
+    dff2 = dff[["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]]
+    dff2 = dff2.transpose()
 
-    dff = dff.transpose().reset_index()
-    dff = dff.tail(4)
-    return dff.to_dict('records')
+    # new df
+    values = ["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]
+    df3 = pd.DataFrame({'Cost Category': values, "Amount ($)": dff2.iloc[:,0].values})
+
+    # # move sum to end of df
+    first_row = df3.head(1)
+    df3 = df3.iloc[1:]
+    df3 = pd.concat([df3, first_row], ignore_index=True)
+
+
+    return df3.to_dict('records')
 
 
 # ------------------------------------------------------------------------------
