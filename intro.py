@@ -95,6 +95,12 @@ app.layout = html.Div(className="main-content", children=[
                 multi=False,
                 value="virtual",
                 ),
+
+                html.Label(className="select-label", children="Canadian Triage and Acuity Scale (CTAS) Level"),
+                dcc.Dropdown(className="slct-ctas", id="slct-ctas", 
+                multi=False,
+                value="1-3",
+                ),
                 html.Br(),
                 dash_table.DataTable(
                     id="datatable",
@@ -152,16 +158,29 @@ def update_graph(option_slctd):
     )
     return container, fig
 
+# dependent dropdown
+@app.callback(
+    Output('slct-ctas', 'options'),
+    [Input('slct-service-type','value')])
+def update_dropdown(selected_service):
+    if (selected_service == "emergency"):
+        options=[{"label": "1-3", "value": "1-3"},
+                {"label": "4-5", "value": "4-5"},]
+    else:
+        options=[{"label": "--", "value": ""}]
+    return options
+
 
 # costs table entries
 @app.callback(
     Output("datatable", "data"), 
     [Input(component_id='slct-service-type', component_property='value'),
      Input(component_id='slct_ha', component_property='value'),
-     Input(component_id='slct_age', component_property='value')
+     Input(component_id='slct_age', component_property='value'),
+     Input(component_id='slct-ctas', component_property='value')
      ]
 )
-def update_table(service_slctd, ha_slctd, age_slctd):
+def update_table(service_slctd, ha_slctd, age_slctd, ctas_slctd):
 
     dff = df2.copy() #always make a copy of df
     dff =dff[["service_type", "health_authority", "ctas_admit", "age", "Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]]
@@ -175,13 +194,19 @@ def update_table(service_slctd, ha_slctd, age_slctd):
 
     # filter by age category dropdown
     dff = dff[dff["age"] == age_slctd]
-
-    dff2 = dff[["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]]
+    dff2 = dff[["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket","ctas_admit"]]
     dff2 = dff2.transpose()
+    if (service_slctd == "emergency"):
+        index = dff2.loc["ctas_admit"].tolist().index(ctas_slctd)
+    else:
+        index = 0
+    
+
 
     # new df
     values = ["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]
-    df3 = pd.DataFrame({'Cost Category': values, "Amount": dff2.iloc[:,0].values})
+    print(dff2)
+    df3 = pd.DataFrame({'Cost Category': values, "Amount": dff2.iloc[:4,index].values})
 
     # # move sum to end of df
     first_row = df3.head(1)
