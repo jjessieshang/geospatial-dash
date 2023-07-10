@@ -59,7 +59,7 @@ fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 # ------------------------------------------------------------------------------
 # app layout: contains dash components and html
 app.layout = html.Div(className="main-content", children=[
-    html.H1(className="dash-title", children=["HEALTHCARE COSTS ACROSS BRITISH COLUMBIA"]),
+    html.H1(className="dash-title", children=["PATIENT & FAMILY HEALTHCARE COSTS ACROSS BRITISH COLUMBIA"]),
 
     html.Div(className="main-row", children=[
         html.Div(className="column1", children=[
