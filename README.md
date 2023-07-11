@@ -12,7 +12,7 @@ Anaconda Navigator
 ### Installation
 ### Starting the app
 
-1. `cd` into environments folder
+1. `cd` into the environments folder
 2. run `conda env create -f mydash.yml`
 3. run `conda activate env_dash_1_8_0`
 4. open `intro.py`

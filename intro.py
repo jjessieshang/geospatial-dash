@@ -40,10 +40,10 @@ fig.add_trace(go.Pie(labels=labels, values=[27, 11, 25, 8, 1, 3, 25], name="CO2 
 fig.update_traces(hole=.4, hoverinfo="label+percent+name")
 
 fig.update_layout(
-    title_text="Global Emissions 1990-2011",
+    title_text="Chart Section",
     # Add annotations in the center of the donut pies.
-    annotations=[dict(text='GHG', x=0.18, y=0.5, font_size=20, showarrow=False),
-                 dict(text='CO2', x=0.82, y=0.5, font_size=20, showarrow=False)]),
+    annotations=[dict(text='', x=0.18, y=0.5, font_size=20, showarrow=False),
+                 dict(text='', x=0.82, y=0.5, font_size=20, showarrow=False)]),
 
 df = px.data.election()
 geojson = px.data.election_geojson()
