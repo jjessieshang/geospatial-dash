@@ -16,12 +16,15 @@ hosp <- read_csv('Mapping/Hospitals/hlbc_emergencyrooms.csv')
 # remove extra row for surrey memorial
 hosp <- hosp %>% group_by(Facility) %>% slice(1) %>% ungroup()
 
+# remove special characters in facility names to avoid plotting errors
+hosp$Facility <- iconv(x=hosp$Facility, from = "UTF-8", to = "UTF-8", sub = "")
+
 # labels for mapping
 hosp.labs <- sprintf("%s", hosp$Facility) %>% lapply(htmltools::HTML)
 
 # Family medicine data with coordinates
-fmed <- read_csv('Mapping/FM Clinic List_IanCooper_csv.csv')
-fmed.labs <- sprintf("%s", fmed$ID) %>% lapply(htmltools::HTML)
+# fmed <- read_csv('Mapping/FM Clinic List_IanCooper_csv.csv')
+# fmed.labs <- sprintf("%s", fmed$ID) %>% lapply(htmltools::HTML)
 
 ### CHSA shapefile data
 chsa <- st_read('Mapping/CHSA_2018/CHSA_2018.shp')
