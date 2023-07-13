@@ -9,8 +9,8 @@ app = Dash(__name__)
 
 # ------------------------------------------------------------------------------
 
-# costs dataframe cleaning and preprocessing
-df2 = pd.read_csv("data/P&F Costs Data/P&F-Costs-Simplfied.csv", delimiter=",", encoding="utf-8", header=0)
+# costs dataframe cleaning and preprocessing 
+df2 = pd.read_csv("data/P&F Costs Data/P&F Costs Simplified.csv", delimiter=",", encoding="utf-8", header=0)
 df2.reset_index(inplace=True)
 df2 = df2.rename(columns={'lost_productivity': 'Lost Productivity', 'informal_caregiver': 'Informal Caregiver', 'out_of_pocket': 'Out of Pocket', 
                           'cost_value': 'Total'})
