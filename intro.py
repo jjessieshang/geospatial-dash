@@ -15,45 +15,8 @@ df2.reset_index(inplace=True)
 df2 = df2.rename(columns={'lost_productivity': 'Lost Productivity', 'informal_caregiver': 'Informal Caregiver', 'out_of_pocket': 'Out of Pocket', 
                           'cost_value': 'Total'})
 
-#DUMMY DATA FOR MAP AND PIE CHARTS
-data = OrderedDict(
-[
-    ("Date", ["2015-01-01", "2015-10-24", "2016-05-10", "2017-01-10", "2018-05-10", "2018-08-15"]),
-    ("Region", ["Montreal", "Toronto", "New York City", "Miami", "San Francisco", "London"]),
-    ("Temperature", [1, -20, 3.512, 4, 10423, -441.2]),
-    ("Humidity", [10, 20, 30, 40, 50, 60]),
-    ("Pressure", [2, 10924, 3912, -10, 3591.2, 15]),
-]
-),
-
-labels = ["US", "China", "European Union", "Russian Federation", "Brazil", "India",
-          "Rest of World"]
-
-# Create subplots: use 'domain' type for Pie subplot
-fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
-fig.add_trace(go.Pie(labels=labels, values=[16, 15, 12, 6, 5, 4, 42], name="GHG Emissions"),
-              1, 1)
-fig.add_trace(go.Pie(labels=labels, values=[27, 11, 25, 8, 1, 3, 25], name="CO2 Emissions"),
-              1, 2)
-
-# Use `hole` to create a donut-like pie chart
-fig.update_traces(hole=.4, hoverinfo="label+percent+name")
-
-fig.update_layout(
-    title_text="Global Emissions 1990-2011",
-    # Add annotations in the center of the donut pies.
-    annotations=[dict(text='GHG', x=0.18, y=0.5, font_size=20, showarrow=False),
-                 dict(text='CO2', x=0.82, y=0.5, font_size=20, showarrow=False)]),
-
 df = px.data.election()
 geojson = px.data.election_geojson()
-
-fig2 = px.choropleth(df, geojson=geojson, color="Bergeron",
-                    locations="district", featureidkey="properties.district",
-                    projection="mercator"
-                   )
-fig2.update_geos(fitbounds="locations", visible=False)
-fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
 
 # ------------------------------------------------------------------------------
@@ -138,9 +101,30 @@ app.layout = html.Div(className="main-content", children=[
         ]),
 
         html.Div(className="column2", children=[
-                dcc.Graph(id='my_map', figure=fig2),
+                # multi select?
+                dcc.Dropdown(className="multi_slct-ha", id="multi_slct-ha",
+                options=[
+                    {"label": "Northern", "value": "Northern"},
+                    {"label": "Interior", "value": "Interior"},
+                    {"label": "Vancouver Coastal", "value": "Vancouver Coastal"},
+                    {"label": "Fraser", "value": "Fraser"},
+                    {"label": "Vancouver Island", "value": "Vancouver Island"}],
+                        multi=True,
+                        placeholder="Select health authorities",
+                ),
+                dcc.RadioItems(className="plot-comparator", id="plot-comparator",
+                    options=[
+                        {'label': 'Age', 'value': 'age'},
+                        {'label': 'Service Type', 'value': 'service_type'},
+                    ],
+                ),
+                dcc.Dropdown(className="plot-basis", id="plot-basis", 
+                    multi=False,
+                ),
                 html.Br(),
-                dcc.Graph(id='my_polar1', figure=fig),
+
+                # stacked bar
+                dcc.Graph(id='grouped_bar'),
         ]),
     ]),
 
@@ -194,7 +178,6 @@ def update_table(service_slctd, ha_slctd, age_slctd, ctas_slctd):
         index = 0
 
     values = ["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]
-    print(dff)
     cost_summary = pd.DataFrame({'Cost Category': values, "Amount": dff.iloc[:4,index].values})
 
     # move total sum to end of df
@@ -204,6 +187,83 @@ def update_table(service_slctd, ha_slctd, age_slctd, ctas_slctd):
 
     return cost_summary.to_dict('records')
 
+
+# cascading plot dropdown
+@app.callback(
+    Output('plot-basis', 'options'),
+    [Input('plot-comparator', 'value')]
+)
+def update_plot_basis(comparator):
+    if comparator == "age":
+        options = [
+            {"label": "Emergency Care", "value": "emergency"},
+            {"label": "Family Doctor", "value": "family medicine"},
+            {"label": "Virtual Care", "value": "virtual"},
+            {"label": "Hospitalization", "value": "hospitalization"}
+        ]
+    else:
+        options = [
+            {"label": "0-14 years", "value": "0-14"},
+            {"label": "15-64 years", "value": "15-64"},
+            {"label": "65+ years", "value": "65+"}
+        ]
+    return options
+
+# stacked bar graph responsive to basis and comparator
+@app.callback(
+    Output("grouped_bar", "figure"), 
+    [Input(component_id='multi_slct-ha', component_property='value'),
+     Input(component_id='plot-comparator', component_property='value'),
+     Input(component_id='plot-basis', component_property='value'),]
+)
+def grouped_bar(health_auths, comparator, basis):
+    ha_list = []
+    groups = []
+
+    if (comparator == "age"):
+        groups = ["0-14", "15-64", "65+"]
+    else:
+        groups = ["emergency", "family medicine", "virtual", "hospitalization"]
+
+    listCosts =[]
+    dff = df2.copy() #always make a copy of df
+    dff =dff[["service_type", "health_authority", "ctas_admit", "age", "Total"]]
+
+    if health_auths is not None: 
+        for ha in health_auths:
+            ha_list.append(ha)
+
+        for group in groups:
+            # age
+            cost_list = []
+            for ha in ha_list:
+                if (comparator == "age"):
+                    if (basis == "virtual"):
+                        total = dff[(dff["service_type"] == "virtual")
+                            & (dff["age"] == group)]["Total"].values[0] 
+                    else:
+                        total = dff[(dff["health_authority"] == ha) & (dff["service_type"] == basis)
+                            & (dff["age"] == group)]["Total"].values[0]
+                else:
+                    if (group == "virtual"):
+                          total = dff[(dff["service_type"] == "virtual")
+                            & (dff["age"] == basis)]["Total"].values[0]         
+                    else:             
+                        total = dff[(dff["health_authority"] == ha) & (dff["service_type"] == group)
+                            & (dff["age"] == basis)]["Total"].values[0] 
+                     
+                total = total[1:].replace(",", "").strip()
+                cost_list.append(float(total))
+            listCosts.append(cost_list) #list of lists
+
+    # for each ha, append that total cost to y value chart
+    print(listCosts)
+    fig = go.Figure()
+    for i in range(len(groups)):
+        fig.add_trace(go.Bar(name=groups[i], x=ha_list, y=listCosts[i]))
+
+    fig.update_layout(barmode='group')
+    return fig
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
