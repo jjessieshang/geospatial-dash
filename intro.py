@@ -125,6 +125,7 @@ app.layout = html.Div(className="main-content", children=[
 
                 # stacked bar
                 dcc.Graph(id='grouped_bar'),
+                html.Div(id="test")
         ]),
     ]),
 
@@ -257,13 +258,32 @@ def grouped_bar(health_auths, comparator, basis):
             listCosts.append(cost_list) #list of lists
 
     # for each ha, append that total cost to y value chart
-    print(listCosts)
     fig = go.Figure()
     for i in range(len(groups)):
-        fig.add_trace(go.Bar(name=groups[i], x=ha_list, y=listCosts[i]))
+        hover_text = [f"Health Authority: {ha} Total Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
+        fig.add_trace(go.Bar(
+            name=groups[i],
+            x=ha_list,
+            y=listCosts[i],
+            hovertemplate="%{hovertext}",
+            hovertext=hover_text,
+            customdata=hover_text  # Use hover text as click data
+        ))
 
     fig.update_layout(barmode='group')
     return fig
+
+@app.callback(
+    Output("test", "children"),
+    [Input("grouped_bar", "clickData")]
+)
+def handle_hover(hover_data):
+    if hover_data is not None:
+        # Process the hover data
+        # Access relevant information from hover_data and perform desired actions
+        return f"Hovered Data: {hover_data}"
+    else:
+        return "No hover data"
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
