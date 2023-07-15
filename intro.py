@@ -260,14 +260,22 @@ def grouped_bar(health_auths, comparator, basis):
     # for each ha, append that total cost to y value chart
     fig = go.Figure()
     for i in range(len(groups)):
-        hover_text = [f"Health Authority: {ha} Total Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
+        # Create your custom JSON data for each point
+        if comparator == "age":
+            print(groups)
+            custom_json_data = [{"health authority": ha, "service type": basis, "age": groups[i]} for ha in zip(ha_list)]
+            hover_text = [f"Health Authority: {ha} Total Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
+        else:
+            custom_json_data = [{"health authority": ha, "service type": groups[i], "age": basis} for ha in zip(ha_list)]
+            hover_text = [f"Health Authority: {ha} Total Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
+
         fig.add_trace(go.Bar(
             name=groups[i],
             x=ha_list,
             y=listCosts[i],
             hovertemplate="%{hovertext}",
             hovertext=hover_text,
-            customdata=hover_text  # Use hover text as click data
+            customdata=custom_json_data  # Use hover text as click data
         ))
 
     fig.update_layout(barmode='group')
@@ -277,11 +285,11 @@ def grouped_bar(health_auths, comparator, basis):
     Output("test", "children"),
     [Input("grouped_bar", "clickData")]
 )
-def handle_hover(hover_data):
-    if hover_data is not None:
-        # Process the hover data
+def handle_hover(click_data):
+    if click_data is not None:
         # Access relevant information from hover_data and perform desired actions
-        return f"Hovered Data: {hover_data}"
+        data = click_data["points"][0]["customdata"]
+        return f"Data: {data}"
     else:
         return "No hover data"
 
