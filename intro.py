@@ -66,10 +66,10 @@ app.layout = html.Div(className="main-content", children=[
                 ),
                 html.Br(),
                 html.Label(className="select-label", children="Canadian Triage and Acuity Scale (CTAS) Level"),
-                dcc.Dropdown(className="slct-ctas", id="slct-ctas", 
-                multi=False,
-                value="1-3",
-                ),
+                # dcc.Dropdown(className="slct-ctas", id="slct-ctas", 
+                # multi=False,
+                # value="1-3",
+                # ),
                 html.Br(),
                 dash_table.DataTable(
                     id="datatable",
@@ -125,7 +125,38 @@ app.layout = html.Div(className="main-content", children=[
 
                 # stacked bar
                 dcc.Graph(id='grouped_bar'),
-                html.Div(id="test")
+                html.Div(id="test"),
+                dcc.Dropdown(className="slct-ctas", id="slct-ctas", 
+                multi=False,
+                value="1-3",
+                ),
+
+                # NEW TABLE
+                dash_table.DataTable(
+                    id="table",
+                    style_table={'height': '550px', 'overflowY': 'auto'},
+                    style_cell_conditional=[
+                        {
+                            'if': {'column_id': c},
+                            'textAlign': 'left'
+                        } for c in ['Cost Category', 'Amount']
+                    ],
+                    style_data={
+                        'color': 'black',
+                        'backgroundColor': 'white'
+                    },
+                    style_data_conditional=[
+                        {
+                            'if': {'row_index': 'odd'},
+                            'backgroundColor': 'rgb(230, 230, 230)',
+                        }
+                    ],
+                    style_header={
+                        'backgroundColor': 'rgb(230, 230, 230)',
+                        'color': 'black',
+                        'fontWeight': 'bold'
+                    }
+                ),
         ]),
     ]),
 
@@ -135,17 +166,7 @@ app.layout = html.Div(className="main-content", children=[
 # Connect the Plotly graphs with Dash Components
 # each callback has inputs and outputs, along with a function with arguments that realte to each input
 
-# cascading CTAS dropdown
-@app.callback(
-    Output('slct-ctas', 'options'),
-    [Input('slct-service-type','value')])
-def update_dropdown(selected_service):
-    if (selected_service == "emergency"):
-        options=[{"label": "1-3", "value": "1-3"},
-                {"label": "4-5", "value": "4-5"},]
-    else:
-        options=[{"label": "N/A", "value": ""}]
-    return options
+
 
 
 # costs table entries
@@ -262,7 +283,6 @@ def grouped_bar(health_auths, comparator, basis):
     for i in range(len(groups)):
         # Create your custom JSON data for each point
         if comparator == "age":
-            print(groups)
             custom_json_data = [{"health authority": ha, "service type": basis, "age": groups[i]} for ha in zip(ha_list)]
             hover_text = [f"Health Authority: {ha} Total Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
         else:
@@ -292,6 +312,79 @@ def handle_hover(click_data):
         return f"Data: {data}"
     else:
         return "No hover data"
+
+# cascading CTAS dropdown
+@app.callback(
+    Output('slct-ctas', 'options'),
+    [Input("grouped_bar", "clickData")])
+def update_dropdown(click_data):
+
+    if click_data is not None:
+        # Access relevant information from hover_data and perform desired actions
+        data = click_data["points"][0]["customdata"]
+        selected_service = data['service type']
+
+    if (selected_service == "emergency"):
+        options=[{"label": "1-3", "value": "1-3"},
+                {"label": "4-5", "value": "4-5"},]
+    else:
+        options=[{"label": "N/A", "value": ""}]
+    return options
+
+# costs table entries
+@app.callback(
+    Output("table", "data"), 
+    [Input("grouped_bar", "clickData")]
+)
+def graph_update_table(click_data):
+    dff = df2.copy() #always make a copy of df
+    dff =dff[["service_type", "health_authority", "ctas_admit", "age", "Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]]
+
+    if click_data is not None:
+        # Access relevant information from hover_data and perform desired actions
+        data = click_data["points"][0]["customdata"]
+        service_slctd = data['service type']
+        ha_slctd = data['health authority'][0]
+        age_slctd = data['age']
+
+        # filter by service type drop down
+        dff = dff[dff["service_type"] == service_slctd]
+
+        # filter by health authority dropdown, non specific for virtual care
+        if (service_slctd != "virtual") :
+            dff = dff[dff["health_authority"] == ha_slctd]
+
+        # filter by age category dropdown
+        dff = dff[dff["age"] == age_slctd]
+        dff = dff[["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket","ctas_admit"]]
+        dff = dff.transpose()
+        if (service_slctd == "emergency"):
+            index = dff.loc["ctas_admit"].tolist().index('1-3')
+            index2 = dff.loc["ctas_admit"].tolist().index('4-5')
+        else:
+            index = 0
+
+        values = ["Total", "Lost Productivity", "Informal Caregiver","Out of Pocket"]
+        cost_summary = pd.DataFrame({'Cost Category': values, "Amount": dff.iloc[:4,index].values})
+        if (service_slctd == "emergency"):
+            additional_rows_df = pd.DataFrame({'Cost Category': values, "Amount": dff.iloc[:4,index2].values})
+            cost_summary = pd.concat([cost_summary, additional_rows_df], ignore_index=True)
+
+        # move total sum to end of df
+        first_row = cost_summary.head(1)
+        cost_summary = cost_summary.iloc[1:]
+        cost_summary = pd.concat([cost_summary, first_row], ignore_index=True)
+
+        return cost_summary.to_dict('records')
+    else:
+        # Return an empty table with a 2x2 structure
+        empty_table_data = {
+            'Column 1': ['', ''],
+            'Column 2': ['', '']
+        }
+        empty_table = pd.DataFrame(empty_table_data)
+
+        return empty_table.to_dict('records')
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
