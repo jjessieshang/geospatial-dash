@@ -20,12 +20,11 @@ df2 = df2.rename(columns={'lost_productivity': 'Lost Productivity', 'informal_ca
 # app layout: contains dash components and html
 app.layout = html.Div(className="main-content", children=[
     html.H1(className="dash-title", children=["PATIENT & FAMILY HEALTHCARE COSTS ACROSS BRITISH COLUMBIA"]),
-
     html.Div(className="main-row", children=[
         html.Div(className="column1", children=[
             html.H3(className="section-title", 
                     children=["Choose a health authority and age group from the list below to view costs"]),
-            html.P(className="section-title", 
+            html.P(className="section-description", 
                 children=["f type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"]),
             # dropdown menus
             html.Label(className="select-label", children="Select the Health Authorities you would like to view"),
@@ -130,6 +129,7 @@ def update_plot_basis(comparator):
 def grouped_bar(health_auths, comparator, basis):
     ha_list = []
     groups = []
+    colors = ['#0055B7', '#00A7E1', '#6EC4E8', '#97D4E9']
 
     if (comparator == "age"):
         groups = ["0-14", "15-64", "65+"]
@@ -180,6 +180,7 @@ def grouped_bar(health_auths, comparator, basis):
 
         fig.add_trace(go.Bar(
             name=groups[i],
+            marker_color=colors[i],
             x=ha_list,
             y=listCosts[i],
             hovertemplate="%{hovertext}",
