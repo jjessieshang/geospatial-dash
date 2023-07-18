@@ -5,6 +5,11 @@ div {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   } 
 
+h3 {
+    font-family: 'Open Sans', sans-serif;
+    color: #002145;
+}
+
 /* website layout */
 .main-content {
     width: 100%;
@@ -13,15 +18,17 @@ div {
 }
 
 .column1 {
-    float: left;
+    display: table-cell;
     width: 35%;
-    background-color: #f9f9f9;    
+    background-color: #f9f9f9;  
+    padding: 0 1rem;  
 }
 
 .column2 {
-    float: left;
+    display: table-cell;
     width: 65%;
-    background-color: #F4F4F4;
+    background-color: #eee;
+    padding: 0 1rem;
 }
 
 .main-row:after {
@@ -41,14 +48,20 @@ div {
     font-family: 'Open Sans', sans-serif;
 }
 
-.section-title {
-    font-family: 'Open Sans', sans-serif;
-}
-
-.section-description {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 9pt;
-}
 .slct-age {
     padding: .5rem 0;
+}
+
+/* column 2 */
+.component-title {
+    padding-top: 1rem;
+}
+.plot {
+    background-color: #Ffffff;
+    padding: 0 1.2rem;
+}
+
+.table {
+    background-color: #Ffffff;
+    padding: 0 1.2rem;
 }

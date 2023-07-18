@@ -1,9 +1,7 @@
 import pandas as pd
 import plotly.express as px  # (version 4.7.0 or higher)
 import plotly.graph_objects as go
-from dash import Dash, dcc, html, Input, Output, dash_table  # pip install dash (version 2.0.0 or higher) 
-from collections import OrderedDict
-from plotly.subplots import make_subplots
+from dash import Dash, dcc, html, Input, Output, dash_table, ctx  # pip install dash (version 2.0.0 or higher) 
 
 app = Dash(__name__)
 
@@ -55,40 +53,46 @@ app.layout = html.Div(className="main-content", children=[
         ]),
 
         html.Div(className="column2", children=[
-                html.H1(className="title", children=["BAR CHART"]),
-                html.Br(),
-
                 # stacked bar
-                dcc.Graph(id='grouped_bar'),
-                html.Div(id="test"),
-                html.H1("Cost of Care Summary"),
-                html.Br(),
+                html.Div(className="plot", children=[
+                    html.H3(className="component-title", id="plot-title"),
+                    html.Hr(),
+                    dcc.Graph(id='grouped_bar'),
+                ]),
+
                 # NEW TABLE
-                dash_table.DataTable(
-                    id="table",
-                    style_table={'height': '550px', 'overflowY': 'auto'},
-                    style_cell_conditional=[
-                        {
-                            'if': {'column_id': c},
-                            'textAlign': 'left'
-                        } for c in ['Cost Category', 'Amount']
-                    ],
-                    style_data={
-                        'color': 'black',
-                        'backgroundColor': 'white'
-                    },
-                    style_data_conditional=[
-                        {
-                            'if': {'row_index': 'odd'},
+                html.Div(className="table", 
+                    children=[
+                        html.H3(className="component-title", id="table-title",
+                                children=["Cost Subunit Breakdown"]),
+                        html.P(className="section-title", id="table-description"),
+                        html.Hr(),
+                        dash_table.DataTable(
+                        id="table",
+                        style_table={'height': '550px', 'overflowY': 'auto'},
+                        style_cell_conditional=[
+                            {
+                                'if': {'column_id': c},
+                                'textAlign': 'left'
+                            } for c in ['Cost Category', 'Amount']
+                        ],
+                        style_data={
+                            'color': 'black',
+                            'backgroundColor': 'white'
+                        },
+                        style_data_conditional=[
+                            {
+                                'if': {'row_index': 'odd'},
+                                'backgroundColor': 'rgb(230, 230, 230)',
+                            }
+                        ],
+                        style_header={
                             'backgroundColor': 'rgb(230, 230, 230)',
+                            'color': 'black',
+                            'fontWeight': 'bold'
                         }
-                    ],
-                    style_header={
-                        'backgroundColor': 'rgb(230, 230, 230)',
-                        'color': 'black',
-                        'fontWeight': 'bold'
-                    }
-                ),
+                    ),
+                ])  
         ]),
     ]),
 
@@ -187,25 +191,33 @@ def grouped_bar(health_auths, comparator, basis):
             hovertext=hover_text,
             customdata=custom_json_data  # Use hover text as click data
         ))
+    fig.update_layout(
+        barmode='group', 
+        template="simple_white",
+        legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1),
+        margin=dict(t=5, b=50, l=50, r=30)
+    )
+    
+    fig.update_yaxes(tickprefix="$", showgrid=True)
 
-    fig.update_layout(barmode='group')
+    fig.update_layout(legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+))
     return fig
-
-@app.callback(
-    Output("test", "children"),
-    [Input("grouped_bar", "clickData")]
-)
-def handle_hover(click_data):
-    if click_data is not None:
-        # Access relevant information from hover_data and perform desired actions
-        data = click_data["points"][0]["customdata"]
-        return f"Data: {data}"
-    else:
-        return "No hover data"
 
 # costs table entries
 @app.callback(
-    Output("table", "data"), 
+    [Output("table", "data"), 
+     Output("table-description", "children")],
     [Input("grouped_bar", "clickData")]
 )
 def graph_update_table(click_data):
@@ -259,12 +271,7 @@ def graph_update_table(click_data):
             # Create a multi-index by combining 'Category' and 'Cost Category'
             cost_summary.set_index(['CTAS Level', 'Cost Category'], inplace=True)
             cost_summary.reset_index(inplace=True)
-
-       
-
-        
-
-        return cost_summary.to_dict('records')
+        return cost_summary.to_dict('records'), f"Health Authority: {ha_slctd}, Service Type: {service_slctd}, Age: {age_slctd},"
     else:
         # Return an empty table with a 2x2 structure
         empty_table_data = {
@@ -273,7 +280,26 @@ def graph_update_table(click_data):
         }
         empty_table = pd.DataFrame(empty_table_data)
 
-        return empty_table.to_dict('records')
+        return empty_table.to_dict('records'), ""
+    
+# responsive plot title
+@app.callback(
+    Output("plot-title", "children"),
+    [Input(component_id='plot-comparator', component_property='value'),
+     Input(component_id='plot-basis', component_property='value'),]
+)
+def handle_hover(comparator, basis):
+    button_clicked = ctx.triggered_id
+    if (basis is not None) and (button_clicked == 'plot-basis'):
+        if (comparator == "age"):
+            head = "Service Type:"
+        else:
+            head = "Age:"
+
+        return f"Total Single Visitation Cost ({head} {basis})"
+    else:
+        return "Total Single Visitation Cost"
+    
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
