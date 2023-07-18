@@ -21,13 +21,14 @@ app.layout = html.Div(className="main-content", children=[
     html.Div(className="main-row", children=[
         html.Div(className="column1", children=[
             html.H3(className="section-title", 
-                    children=["Choose a health authority and age group from the list below to view costs"]),
+                    children=["Geospatial Costing Dashboard"]),
             html.P(className="section-description", 
-                children=["f type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"]),
+                children=["Explore the estimated costs that patients and their families pay for four types of care across British Columbia. Click on the bar graph to view a breakdown of the visitation costs."]),
+            html.Br(),
             # dropdown menus
-            html.Label(className="select-label", children="Select the Health Authorities you would like to view"),
+            html.Label(className="select-label", children="Select Health Authorities"),
             # multi select?
-            dcc.Dropdown(className="multi_slct-ha", id="multi_slct-ha",
+            dcc.Dropdown(className="options", id="multi_slct-ha",
             options=[
                 {"label": "Northern", "value": "Northern"},
                 {"label": "Interior", "value": "Interior"},
@@ -35,21 +36,24 @@ app.layout = html.Div(className="main-content", children=[
                 {"label": "Fraser", "value": "Fraser"},
                 {"label": "Vancouver Island", "value": "Vancouver Island"}],
                     multi=True,
-                    placeholder="Select health authorities",
             ),
             html.Br(),
-            html.Label(className="select-label", children="Select the comparison parameter"),
-            dcc.RadioItems(className="plot-comparator", id="plot-comparator",
+            html.Label(className="select-label", children="Select Comparator"),
+            dcc.RadioItems(className="options", id="plot-comparator",
                 options=[
                     {'label': 'Age', 'value': 'age'},
                     {'label': 'Service Type', 'value': 'service_type'},
                 ],
             ),
             html.Br(),
-            html.Label(className="select-label", children="Which cost category would you like to plot?"),
-            dcc.Dropdown(className="plot-basis", id="plot-basis", 
+            html.Label(className="select-label", children="Select Visitation Category"),
+            dcc.Dropdown(className="options", id="plot-basis", 
                 multi=False,
             ),
+
+            html.Button(className="reset",
+                        id="reset",
+                        children=["RESET"])
         ]),
 
         html.Div(className="column2", children=[
@@ -69,13 +73,8 @@ app.layout = html.Div(className="main-content", children=[
                         html.Hr(),
                         dash_table.DataTable(
                         id="table",
-                        style_table={'height': '550px', 'overflowY': 'auto'},
-                        style_cell_conditional=[
-                            {
-                                'if': {'column_id': c},
-                                'textAlign': 'left'
-                            } for c in ['Cost Category', 'Amount']
-                        ],
+                        style_table={'height': '550px', 'overflowY': 'auto', 'font-size': '.9rem'},
+                        style_cell={'textAlign': 'left'},
                         style_data={
                             'color': 'black',
                             'backgroundColor': 'white'
@@ -111,7 +110,7 @@ def update_plot_basis(comparator):
     if comparator == "age":
         options = [
             {"label": "Emergency Care", "value": "emergency"},
-            {"label": "Family Doctor", "value": "family medicine"},
+            {"label": "Family Medicine", "value": "family medicine"},
             {"label": "Virtual Care", "value": "virtual"},
             {"label": "Hospitalization", "value": "hospitalization"}
         ]
@@ -177,10 +176,10 @@ def grouped_bar(health_auths, comparator, basis):
         # Create your custom JSON data for each point
         if comparator == "age":
             custom_json_data = [{"health authority": ha, "service type": basis, "age": groups[i]} for ha in zip(ha_list)]
-            hover_text = [f"Health Authority: {ha} Total Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
+            hover_text = [f"{ha}, Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
         else:
             custom_json_data = [{"health authority": ha, "service type": groups[i], "age": basis} for ha in zip(ha_list)]
-            hover_text = [f"Health Authority: {ha} Total Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
+            hover_text = [f"{ha}, Cost: {cost:,.2f}" for ha, cost in zip(ha_list, listCosts[i])]
 
         fig.add_trace(go.Bar(
             name=groups[i],
@@ -271,7 +270,7 @@ def graph_update_table(click_data):
             # Create a multi-index by combining 'Category' and 'Cost Category'
             cost_summary.set_index(['CTAS Level', 'Cost Category'], inplace=True)
             cost_summary.reset_index(inplace=True)
-        return cost_summary.to_dict('records'), f"Health Authority: {ha_slctd}, Service Type: {service_slctd}, Age: {age_slctd},"
+        return cost_summary.to_dict('records'), f"Health Authority: {ha_slctd} | Service Type: {service_slctd} | Age: {age_slctd}"
     else:
         # Return an empty table with a 2x2 structure
         empty_table_data = {

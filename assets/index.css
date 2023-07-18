@@ -2,13 +2,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700&family=Karla:ital,wght@1,200&family=Kumbh+Sans:wght@400;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Mulish:wght@300;400;500;600&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Raleway:wght@100;200;300&display=swap');
 div {
     box-sizing: border-box;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Arial, sans-serif;
   } 
 
 h3 {
     font-family: 'Open Sans', sans-serif;
     color: #002145;
+    font-size: 1.2rem;
 }
+
+p {
+    font-family: Arial, sans-serif;
+    font-size: .8rem;
+    word-spacing: 2;
+    line-height: 150%;
+    font-stretch: expanded;
+}
+
+.select-label {
+    font-weight: 600;
+    color: #002145;
+}
+
+label {
+    font-family: Arial, sans-serif;
+    font-size: .9rem;
+    color: #002145;
+}
+
 
 /* website layout */
 .main-content {
@@ -21,7 +42,7 @@ h3 {
     display: table-cell;
     width: 35%;
     background-color: #f9f9f9;  
-    padding: 0 1rem;  
+    padding: 0 2rem;  
 }
 
 .column2 {
@@ -44,12 +65,28 @@ h3 {
 }
 
 .dash-title {
+    padding: 0 1rem;
     color: #002145;
     font-family: 'Open Sans', sans-serif;
 }
 
-.slct-age {
-    padding: .5rem 0;
+.section-title {
+    color: #00A7E1
+}
+.options {
+    padding-top: .5rem;
+    font-size: .9rem;
+}
+
+.reset {
+    margin-top: 1.5rem;
+    height: 2rem;
+    width: 8rem;
+    background-color: #f9f9f9;
+    border-color: #eee;
+    border-width: 2px;
+    font-size: .9rem;
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* column 2 */
@@ -64,4 +101,10 @@ h3 {
 .table {
     background-color: #Ffffff;
     padding: 0 1.2rem;
+}
+
+.cost-table {
+    height: '550px'; 
+    overflow-y: auto;
+    text-align: left;
 }
