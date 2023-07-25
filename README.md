@@ -15,7 +15,7 @@ Anaconda Navigator
 1. `cd` into environments folder
 2. run `conda env create -f mydash.yml`
 3. run `conda activate env_dash_1_8_0`
-4. open `intro.py`
-5. run the python file 
+4. `cd` to root folder (`cd ..`)
+4. run `python intro.py`
 
 App will be exposed on port 8050.
