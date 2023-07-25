@@ -199,7 +199,7 @@ def grouped_bar(health_auths, comparator, basis):
         y=1.02,
         xanchor="right",
         x=1),
-        margin=dict(t=5, b=50, l=50, r=30)
+        margin=dict(t=50, b=50, l=50, r=30)
     )
     
     fig.update_yaxes(tickprefix="$", showgrid=True)
