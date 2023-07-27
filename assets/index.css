@@ -17,6 +17,7 @@ p {
     word-spacing: 2;
     line-height: 150%;
     font-stretch: expanded;
+    text-decoration: none;
 }
 
 .select-label {
@@ -30,8 +31,25 @@ label {
     color: #002145;
 }
 
+.navbar {
+    display: flex; /* Use flexbox to align items horizontally */
+    padding: .5rem 2rem;
+  }
+
+.navbar-link {
+    font-family: Arial, sans-serif;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
 
 /* website layout */
+
+.navbar {
+    background-color: #002145;
+}
 .main-content {
     width: 100%;
     margin: auto;
