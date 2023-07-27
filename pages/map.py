@@ -38,4 +38,9 @@ fig7.update_layout(title_text='Choropleth Map with z=1 for All Features',
 
 layout = html.Div(children=[
     dcc.Graph(figure=fig7),
+    html.Div(
+        children=[
+            html.H2("INSERT AGGREGATED HA DISTANCES TABLE")
+        ]
+    )
 ])

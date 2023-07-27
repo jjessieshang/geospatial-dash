@@ -80,6 +80,7 @@ app.layout = html.Div(className="main-content", children=[
                         id="table",
                         style_table={'height': '550px', 'overflowY': 'auto', 'font-size': '.9rem'},
                         style_cell={'textAlign': 'left'},
+                        cell_selectable=False,
                         style_data={
                             'color': 'black',
                             'backgroundColor': 'white'
