@@ -2,8 +2,14 @@ import pandas as pd
 import plotly.express as px  # (version 4.7.0 or higher)
 import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output, dash_table, ctx  # pip install dash (version 2.0.0 or higher) 
+import dash
+import requests
+import geopandas as gpd
+import json
+from shapely.geometry import shape
+from shapely.geometry import mapping
 
-app = Dash(__name__)
+app = Dash(__name__,use_pages=True)
 
 # ------------------------------------------------------------------------------
 
@@ -12,7 +18,6 @@ df2 = pd.read_csv("data/P&F Costs Data/P&F Costs Simplified.csv", delimiter=",",
 df2.reset_index(inplace=True)
 df2 = df2.rename(columns={'lost_productivity': 'Lost Productivity', 'informal_caregiver': 'Informal Caregiver', 'out_of_pocket': 'Out of Pocket', 
                           'cost_value': 'Total'})
-
 
 # ------------------------------------------------------------------------------
 # app layout: contains dash components and html
@@ -91,10 +96,24 @@ app.layout = html.Div(className="main-content", children=[
                             'fontWeight': 'bold'
                         }
                     ),
-                ])  
+                ]),
+                html.Div(
+                    [
+                        html.Div(
+                            dcc.Link(
+                                f"{page['name']} - {page['path']}", href=page["relative_path"]
+                            )
+                        )
+                        for page in dash.page_registry.values()
+                    ]
+                ),
+                                # stacked bar
+                # html.Div(className="plot2", children=[
+                #     fig7.show()
+                # ]),
         ]),
     ]),
-
+    dash.page_container
 ])
 
 # ------------------------------------------------------------------------------
