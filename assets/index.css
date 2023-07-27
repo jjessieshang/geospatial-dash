@@ -58,14 +58,14 @@ label {
 
 .column1 {
     display: table-cell;
-    width: 35%;
+    width: 32%;
     background-color: #f9f9f9;  
     padding: 0 2rem;  
 }
 
 .column2 {
     display: table-cell;
-    width: 65%;
+    width: 68%;
     background-color: #eee;
     padding: 0 1rem;
 }

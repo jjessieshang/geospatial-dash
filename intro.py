@@ -1,7 +1,4 @@
-import pandas as pd
-import plotly.express as px  # (version 4.7.0 or higher)
-import plotly.graph_objects as go
-from dash import Dash, dcc, html, Input, Output, dash_table, ctx  # pip install dash (version 2.0.0 or higher) 
+from dash import Dash, dcc, html # pip install dash (version 2.0.0 or higher) 
 import dash
 
 app = Dash(__name__,use_pages=True)

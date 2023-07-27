@@ -1,7 +1,6 @@
 import pandas as pd
-import plotly.express as px  # (version 4.7.0 or higher)
 import plotly.graph_objects as go
-from dash import Dash, dcc, html, Input, Output, dash_table, ctx, callback  # pip install dash (version 2.0.0 or higher) 
+from dash import dcc, html, Input, Output, dash_table, ctx, callback  # pip install dash (version 2.0.0 or higher) 
 import dash
 
 dash.register_page(__name__,path='/')
@@ -16,11 +15,6 @@ df2 = df2.rename(columns={'lost_productivity': 'Lost Productivity', 'informal_ca
 
 # ------------------------------------------------------------------------------
 # app layout: contains dash components and html
-layout = html.Div(
-    children=[
-        "HO"
-    ]
-)
 layout = html.Div(className="main-row", children=[
     html.Div(className="column1", children=[
         html.H3(className="section-title", 
