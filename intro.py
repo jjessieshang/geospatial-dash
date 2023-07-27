@@ -5,7 +5,7 @@ from dash import Dash, dcc, html, Input, Output, dash_table, ctx  # pip install 
 
 app = Dash(__name__)
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------
 
 # costs dataframe cleaning and preprocessing 
 df2 = pd.read_csv("data/P&F Costs Data/P&F Costs Simplified.csv", delimiter=",", encoding="utf-8", header=0)
