@@ -3,11 +3,10 @@ import json
 from dash import html, dcc, callback, Input, Output
 import pandas as pd
 import plotly.express as px  # (version 4.7.0 or higher)
-import plotly.graph_objects as go
 
 dash.register_page(__name__)
 
-# ----------------------
+# ------------------------------------------------------------------------------
 
 # Read the geojson data from the file location
 with open('data/Geospatial Data/chsa_2022_wgs.geojson') as f:
@@ -35,7 +34,7 @@ fig7.update_layout(title_text='Choropleth Map with z=1 for All Features',
                   title_x=0.5,
                   coloraxis_reversescale=True,
                   )
-
+# ------------------------------------------------------------------------------
 layout = html.Div(children=[
     dcc.Graph(figure=fig7),
     html.Div(
