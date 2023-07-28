@@ -7,7 +7,7 @@ app = Dash(__name__,use_pages=True)
 # ------------------------------------------------------------------------------
 # app layout: contains dash components and html
 app.layout = html.Div(className="main-content", children=[
-    html.H1(className="dash-title", children=["PATIENT & FAMILY HEALTHCARE COSTS ACROSS BRITISH COLUMBIA"]),
+    html.H1( children=["PATIENT & FAMILY HEALTHCARE COSTS ACROSS BRITISH COLUMBIA"]),
     html.Div(className="navbar", children=[ 
         html.Div(
             dcc.Link(

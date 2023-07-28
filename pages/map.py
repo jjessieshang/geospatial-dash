@@ -26,30 +26,34 @@ fig7 = px.choropleth_mapbox(merged_df, geojson=jdata,
                            locations='CHSA_Name',
                            color='Street distance (km)',
                            mapbox_style='white-bg',
-                           center={"lat": 53.7267, "lon": -127.6476},  # Set the center of the map
-                           zoom=3.8,  # Set the initial zoom level
-                           height=650,
+                           center={"lat": 55, "lon": -127.6476},  # Set the center of the map
+                           zoom=5,  # Set the initial zoom level
+                           height=1000,
                            color_continuous_scale='blues',
                            )
 
-fig7.update_layout(title_text='Choropleth Map with z=Street Distance (km)',
-                  title_x=0.5,
-                  )
+fig7.update_layout(
+    margin=dict(t=0, b=50, l=50, r=30),
+)
+
 # ------------------------------------------------------------------------------
-layout = html.Div(className="main-row", children=[
+layout = html.Div(className="map", children=[
     html.Div(className="column1", children=[
         html.H3(className="section-title", 
                 children=["Geospatial Costing Dashboard"]),
     ]),
     html.Div(className="column2", children=[
-        html.Div(children=[
+                    # stacked bar
+        html.Div(className="plot", children=[
+            html.H3(className="component-title", id="plot-title", children="CHSA map of british columbia"),
+            html.Hr(),
             dcc.Graph(figure=fig7),
             html.Div(
                 children=[
                     html.H2("INSERT AGGREGATED HA DISTANCES TABLE")
                 ]
             )
-        ])
+        ]),
     ]),
 ])
 

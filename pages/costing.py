@@ -41,7 +41,7 @@ layout = html.Div(className="main-row", children=[
                 {'label': 'Age', 'value': 'age'},
                 {'label': 'Service Type', 'value': 'service_type'},
             ],
-        ),
+        ), 
         html.Br(),
         html.Label(className="select-label", children="Select Visitation Category"),
         dcc.Dropdown(className="options", id="plot-basis", 
