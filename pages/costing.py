@@ -18,7 +18,7 @@ df2 = df2.rename(columns={'lost_productivity': 'Lost Productivity', 'informal_ca
 layout = html.Div(className="main-row", children=[
     html.Div(className="column1", children=[
         html.H3(className="section-title", 
-                children=["Geospatial Costing Dashboard"]),
+                children=["Visitation Cost Analysis"]),
         html.P(className="section-description", 
             children=["Explore the estimated costs that patients and their families pay for four types of care across British Columbia. Click on the bar graph to view a breakdown of the visitation costs."]),
         html.Br(),
@@ -295,3 +295,13 @@ def handle_hover(comparator, basis):
         return f"Total Single Visitation Cost ({head} {basis})"
     else:
         return "Total Single Visitation Cost"
+    
+# @callback(
+#     [Output("text", "children")],
+#     [Input("multi_slct-ha1", "value")]
+# )
+# def graph_update_text(text):
+#     if text is not None:
+#         return [f"Selected value: {text}"]
+#     else:
+#         return ["Select a value from the dropdown"]
