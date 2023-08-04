@@ -5,6 +5,12 @@ div {
     font-family: Arial, sans-serif;
   } 
 
+h1 {
+    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+    padding-left: .8rem;
+}
+
 h3 {
     font-family: 'Open Sans', sans-serif;
     color: #002145;
@@ -34,6 +40,8 @@ label {
 .navbar {
     display: flex; /* Use flexbox to align items horizontally */
     padding: .5rem 2rem;
+    font-weight:lighter;
+    font-size: .9rem;
   }
 
 .navbar-link {

@@ -14,16 +14,19 @@ with open('data/Geospatial Data/chsa_2022_wgs.geojson') as f:
     jdata = json.load(f)
 
 df_distances = pd.read_csv("data/Geospatial Data/CHSA-to-Hosp-distances.csv", delimiter=",", encoding="utf-8", header=0)
+
+# Read aggregated ha csv data
 ha_mean_distances = pd.read_csv("data/Geospatial Data/HealthAuthority_Distances.csv", delimiter=",", encoding="utf-8", header=0)
 ha_mean_durations = pd.read_csv("data/Geospatial Data/HealthAuthority_Durations.csv", delimiter=",", encoding="utf-8", header=0)
 
 ha_mean_distances.rename(columns={'HA Name': 'Health Authority','Street Distance': 'Street Distance (km)'}, inplace=True)
 ha_mean_durations.rename(columns={'HA Name': 'Health Authority','Street Duration - W mean': 'Street Duration (min)'}, inplace=True)
 
-    # Create a DataFrame with 'id' and 'value' columns
+# Create a DataFrame with 'id' and 'value' columns
 data = {'CHSA_Name': [feature['properties']['CHSA_Name'] for feature in jdata['features']]}
-
 gdf = pd.DataFrame(data)
+
+
 # ------------------------------------------------------------------------------
 layout = html.Div(className="map", children=[
     html.Div(className="column1", children=[
@@ -35,7 +38,7 @@ layout = html.Div(className="map", children=[
             children=["The values seen are used to calculate direct out-of-pocket travel costs, the total time commitment per visit, productivity changes and informal caregiving costs in the single visitation cost analysis."]),
             html.Br(),
             html.Label(className="select-label", children="Select Measurement"),
-        dcc.Dropdown(className="in", id="multi_slct-ha1",
+        dcc.Dropdown(className="options", id="multi_slct-ha1",
         options=[
             {"label": "Distance", "value": "distance"},
             {"label": "Duration", "value": "duration"}],
@@ -75,7 +78,7 @@ layout = html.Div(className="map", children=[
     html.Div(className="column2", children=[
         # choropleth map
         html.Div(className="plot", children=[
-            html.H3(className="component-title", id="plot-title", children="CHSA map of british columbia"),
+            html.H3(className="component-title", id="plot-title", children="Community Heath Service Area to Nearest ED"),
             html.Hr(),
             dcc.Graph(id='choropleth'),
         ]),
@@ -83,8 +86,9 @@ layout = html.Div(className="map", children=[
 ])
 
 #-----------------------
+#CALLBACK FUNCTIONS
 
-# map parameter   
+# parameter for map and ha table
 @callback(
     [Output("choropleth", "figure"),
      Output("ha_table", "data"),
@@ -118,7 +122,7 @@ def update_geospatial(measure):
                                 color=measure_name,
                                 mapbox_style='white-bg',
                                 center={"lat": 55, "lon": -127.6476},  # Set the center of the map
-                                zoom=4,  # Set the initial zoom level
+                                zoom=3.5,  # Set the initial zoom level
                                 height=600,
                                 color_continuous_scale='blues',
                                 )
@@ -126,7 +130,4 @@ def update_geospatial(measure):
         fig.update_layout(
             margin=dict(t=0, b=50, l=50, r=30),
         )
-
-        # Generate table entries
-
         return fig, table_data, columns, description
