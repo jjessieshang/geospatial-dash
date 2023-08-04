@@ -26,21 +26,22 @@ layout = html.Div(className="main-row", children=[
         html.Label(className="select-label", children="Select Health Authorities"),
         # multi select?
         dcc.Dropdown(className="options", id="multi_slct-ha",
-        options=[
-            {"label": "Northern", "value": "Northern"},
-            {"label": "Interior", "value": "Interior"},
-            {"label": "Vancouver Coastal", "value": "Vancouver Coastal"},
-            {"label": "Fraser", "value": "Fraser"},
-            {"label": "Vancouver Island", "value": "Vancouver Island"}],
-                multi=True,
-        ),
+            options=[
+                {"label": "Northern", "value": "Northern"},
+                {"label": "Interior", "value": "Interior"},
+                {"label": "Vancouver Coastal", "value": "Vancouver Coastal"},
+                {"label": "Fraser", "value": "Fraser"},
+                {"label": "Vancouver Island", "value": "Vancouver Island"}],
+            value=["Northern", "Interior", "Vancouver Coastal", "Fraser", "Vancouver Island"],  # Set all options as default
+            multi=True),
         html.Br(),
         html.Label(className="select-label", children="Select Comparator"),
         dcc.RadioItems(className="options", id="plot-comparator",
             options=[
                 {'label': 'Age', 'value': 'age'},
-                {'label': 'Service Type', 'value': 'service_type'},
+                {'label': 'Service Type', 'value': 'service_type'},     
             ],
+            value="age",
         ), 
         html.Br(),
         html.Label(className="select-label", children="Select Visitation Category"),
@@ -132,6 +133,8 @@ def grouped_bar(health_auths, comparator, basis):
 
     if (comparator == "age"):
         groups = ["0-14", "15-64", "65+"]
+        if (basis == None):
+            basis ="family medicine" #setting default val
     else:
         groups = ["emergency", "family medicine", "virtual", "hospitalization"]
 
@@ -286,6 +289,8 @@ def graph_update_table(click_data):
 )
 def handle_hover(comparator, basis):
     button_clicked = ctx.triggered_id
+    if (basis == None) and (comparator == "age"):
+        return f"Total Single Visitation Cost (Service Type: family medicine)"
     if (basis is not None) and (button_clicked == 'plot-basis'):
         if (comparator == "age"):
             head = "Service Type:"

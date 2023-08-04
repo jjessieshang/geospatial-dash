@@ -8,11 +8,6 @@ import dash
 dash.register_page(__name__)
 
 # ------------------------------------------------------------------------------
-empty_table_data = {
-        'Column 1': ['', ''],
-        'Column 2': ['', '']
-    }
-empty_table = pd.DataFrame(empty_table_data)
 
 # Read the geojson data from the file location
 with open('data/Geospatial Data/chsa_2022_wgs.geojson') as f:
@@ -21,6 +16,9 @@ with open('data/Geospatial Data/chsa_2022_wgs.geojson') as f:
 df_distances = pd.read_csv("data/Geospatial Data/CHSA-to-Hosp-distances.csv", delimiter=",", encoding="utf-8", header=0)
 ha_mean_distances = pd.read_csv("data/Geospatial Data/HealthAuthority_Distances.csv", delimiter=",", encoding="utf-8", header=0)
 ha_mean_durations = pd.read_csv("data/Geospatial Data/HealthAuthority_Durations.csv", delimiter=",", encoding="utf-8", header=0)
+
+ha_mean_distances.rename(columns={'HA Name': 'Health Authority','Street Distance': 'Street Distance (km)'}, inplace=True)
+ha_mean_durations.rename(columns={'HA Name': 'Health Authority','Street Duration - W mean': 'Street Duration (min)'}, inplace=True)
 
     # Create a DataFrame with 'id' and 'value' columns
 data = {'CHSA_Name': [feature['properties']['CHSA_Name'] for feature in jdata['features']]}
@@ -41,9 +39,12 @@ layout = html.Div(className="map", children=[
         options=[
             {"label": "Distance", "value": "distance"},
             {"label": "Duration", "value": "duration"}],
+                value="distance",
                 multi=False,
         ),
+        html.P(className="section-title", id="value-description"),
         html.Br(),
+
         html.Label(className="select-label", children="Aggregated Values for Health Authorities"),
 
         #aggregated ha table
@@ -87,7 +88,8 @@ layout = html.Div(className="map", children=[
 @callback(
     [Output("choropleth", "figure"),
      Output("ha_table", "data"),
-     Output("ha_table", "columns")], 
+     Output("ha_table", "columns"),
+     Output("value-description", "children"),], 
     [Input("multi_slct-ha1", "value")]
     
 )
@@ -98,6 +100,7 @@ def update_geospatial(measure):
         columns=[
                 {"name": col, "id": col} for col in ha_mean_distances.columns
             ]
+        description = "Mean street distance in km to travel to nearest ED"
 
         if (measure == "duration"):
             merged_df = pd.merge(df_distances[['CHSA_Name', 'Street duration']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
@@ -106,6 +109,7 @@ def update_geospatial(measure):
             columns=[
                 {"name": col, "id": col} for col in ha_mean_durations.columns
             ]
+            description = "Mean duration in minutes to travel to nearest ED, accounting for traffic data"
 
         # Generate the choropleth map
         fig = px.choropleth_mapbox(merged_df, geojson=jdata,
@@ -125,4 +129,4 @@ def update_geospatial(measure):
 
         # Generate table entries
 
-        return fig, table_data, columns
+        return fig, table_data, columns, description
