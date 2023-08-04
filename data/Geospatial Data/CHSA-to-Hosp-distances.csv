@@ -127,7 +127,7 @@ Nelson,Kootenay Lake Hospital,Interior,7.36,8.97,7.36,10.91,1.61,3.55,Yes
 Esquimalt,Victoria General Hospital,Vancouver Island,3.82,6.02,3.82,10.89,2.2,7.07,Yes
 Campbell River,North Island Hospital Campbell River and District,Vancouver Island,3.76,5.68,3.76,10.8,1.92,7.04,Yes
 Smithers Town Centre,Bulkley Valley District Hospital,Northern,5.87,6.44,5.87,10.8,0.57,4.93,Yes
-Windermere,Invermere and District Hospital  ,Interior,5.63,8.01,5.63,10.54,2.38,4.91,Yes
+Windermere,Invermere and District Hospital,Interior,5.63,8.01,5.63,10.54,2.38,4.91,Yes
 Okanagan Mission,Kelowna General Hospital,Interior,5.89,7.55,5.89,10.33,1.66,4.44,Yes
 Steveston,Richmond Hospital,Vancouver Coastal,5.14,6.67,5.14,10.27,1.53,5.13,Yes
 Port Coquitlam,Eagle Ridge Hospital,Fraser,5.56,7.64,5.56,10.24,2.08,4.68,Yes
@@ -161,7 +161,7 @@ Kamloops Centre South,Royal Inland Hospital,Interior,2.83,5.76,2.83,7.8,2.93,4.9
 Fleetwood,Surrey Memorial Hospital,Fraser,4.43,5.05,4.43,7.79,0.61,3.35,Yes
 Central Cowichan,Cowichan District Hospital,Vancouver Island,2.49,4.68,2.49,7.74,2.19,5.25,Yes
 Hastings-Sunrise,Burnaby Hospital,Vancouver Coastal,3.6,5.22,3.6,7.74,1.62,4.14,Yes
-Grandview-Woodland,Mount Saint Joseph Hospital  ,Vancouver Coastal,2.96,4.22,2.96,7.73,1.26,4.77,Yes
+Grandview-Woodland,Mount Saint Joseph Hospital,Vancouver Coastal,2.96,4.22,2.96,7.73,1.26,4.77,Yes
 Thompson/Seafair,Richmond Hospital,Vancouver Coastal,2.84,3.96,2.84,7.56,1.12,4.72,Yes
 Oakridge/Marpole,BC Children's Hospital,Vancouver Coastal,3.29,4.02,3.29,7.51,0.73,4.22,Yes
 Brookswood/Murrayville,Langley Memorial Hospital,Fraser,2.6,5.34,2.6,7.37,2.74,4.77,Yes
@@ -180,15 +180,15 @@ Interurban/Tillicum,Victoria General Hospital,Vancouver Island,1.51,2.65,1.51,6.
 Terrace City Centre,Mills Memorial Hospital,Northern,1.92,4.2,1.92,6.11,2.28,4.19,Yes
 Departure Bay,Nanaimo Regional General Hospital,Vancouver Island,3.05,4.57,3.05,6.11,1.52,3.06,Yes
 James Bay/Fairfield,Royal Jubilee Hospital,Vancouver Island,2.77,3.19,2.77,6.03,0.42,3.26,Yes
-Downtown Eastside,Mount Saint Joseph Hospital  ,Vancouver Coastal,2.48,3.16,2.48,6.01,0.68,3.53,Yes
+Downtown Eastside,Mount Saint Joseph Hospital,Vancouver Coastal,2.48,3.16,2.48,6.01,0.68,3.53,Yes
 Kitsilano,"Vancouver General Hospital - Jim Pattison Pavilion, Emergency Department",Vancouver Coastal,2.83,3.21,2.83,5.92,0.38,3.09,Yes
 Oak Bay,Royal Jubilee Hospital,Vancouver Island,2.05,2.49,2.05,5.59,0.44,3.54,Yes
 North Surrey,Surrey Memorial Hospital,Fraser,2.75,3.55,2.75,5.43,0.79,2.68,Yes
-Kensington,Mount Saint Joseph Hospital  ,Vancouver Coastal,2.29,2.8,2.29,5.35,0.52,3.07,Yes
+Kensington,Mount Saint Joseph Hospital,Vancouver Coastal,2.29,2.8,2.29,5.35,0.52,3.07,Yes
 Blundell,Richmond Hospital,Vancouver Coastal,2.39,3.23,2.39,5.24,0.83,2.85,Yes
 West End,St. Paul's Hospital - Burrard Building,Vancouver Coastal,1.93,2.75,1.93,5.04,0.83,3.11,Yes
 Courtenay,North Island Hospital Comox Valley,Vancouver Island,1.74,2.87,1.74,5.04,1.13,3.3,Yes
-Cedar Cottage,Mount Saint Joseph Hospital  ,Vancouver Coastal,2.12,2.87,2.12,4.91,0.75,2.79,Yes
+Cedar Cottage,Mount Saint Joseph Hospital,Vancouver Coastal,2.12,2.87,2.12,4.91,0.75,2.79,Yes
 Fort St John,Fort St. John Hospital,Northern,1.83,2.73,1.83,4.69,0.9,2.86,Yes
 Haney,Ridge Meadows Hospital,Fraser,2.76,3.53,2.76,4.67,0.78,1.92,Yes
 Quesnel City Centre,G.R. Baker Memorial Hospital,Northern,1.69,3.09,1.69,4.59,1.4,2.9,Yes
@@ -209,7 +209,7 @@ North Vancouver City - West,Lions Gate Hospital,Vancouver Coastal,1.23,1.67,1.23
 Vanderhoof,St. John Hospital,Northern,1.5,1.84,1.5,2.66,0.35,1.16,Yes
 South Cambie/Riley Park,BC Children's Hospital,Vancouver Coastal,0.9,1.2,0.9,2.63,0.3,1.73,Yes
 Oaklands/Fernwood,Royal Jubilee Hospital,Vancouver Island,1.02,1.11,1.02,2.41,0.09,1.39,Yes
-Mount Pleasant,Mount Saint Joseph Hospital  ,Vancouver Coastal,0.72,1.03,0.72,2.39,0.31,1.67,Yes
+Mount Pleasant,Mount Saint Joseph Hospital,Vancouver Coastal,0.72,1.03,0.72,2.39,0.31,1.67,Yes
 Downtown Kelowna,Kelowna General Hospital,Interior,1.15,1.57,1.15,2.38,0.41,1.22,Yes
 White Rock,Peace Arch Hospital,Fraser,1,1.31,1,2.33,0.31,1.33,Yes
 North Vancouver City - East,Lions Gate Hospital,Vancouver Coastal,0.88,1.08,0.88,2.17,0.2,1.29,Yes

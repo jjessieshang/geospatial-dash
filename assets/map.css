@@ -1,0 +1,19 @@
+
+.map {
+    width: 100%;
+    margin: auto;
+    padding-bottom: 50px;
+    display: flex;
+}
+
+.map .column1 {
+    flex-basis: 32%;
+    background-color: #f9f9f9;  
+    padding: 0 2rem;  
+}
+
+.map .column2 {
+    flex-basis: 68%;
+    background-color: #eee;
+    padding: 0 1rem;
+}

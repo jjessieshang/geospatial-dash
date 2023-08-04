@@ -5,6 +5,12 @@ div {
     font-family: Arial, sans-serif;
   } 
 
+h1 {
+    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+    padding-left: .8rem;
+}
+
 h3 {
     font-family: 'Open Sans', sans-serif;
     color: #002145;
@@ -17,6 +23,7 @@ p {
     word-spacing: 2;
     line-height: 150%;
     font-stretch: expanded;
+    text-decoration: none;
 }
 
 .select-label {
@@ -30,8 +37,27 @@ label {
     color: #002145;
 }
 
+.navbar {
+    display: flex; /* Use flexbox to align items horizontally */
+    padding: .5rem 2rem;
+    font-weight:lighter;
+    font-size: .9rem;
+  }
+
+.navbar-link {
+    font-family: Arial, sans-serif;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
 
 /* website layout */
+
+.navbar {
+    background-color: #002145;
+}
 .main-content {
     width: 100%;
     margin: auto;
@@ -40,14 +66,14 @@ label {
 
 .column1 {
     display: table-cell;
-    width: 35%;
+    width: 32%;
     background-color: #f9f9f9;  
     padding: 0 2rem;  
 }
 
 .column2 {
     display: table-cell;
-    width: 65%;
+    width: 68%;
     background-color: #eee;
     padding: 0 1rem;
 }
