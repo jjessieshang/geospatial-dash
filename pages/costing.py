@@ -41,7 +41,6 @@ layout = html.Div(className="main-row", children=[
                 {'label': 'Age', 'value': 'age'},
                 {'label': 'Service Type', 'value': 'service_type'},     
             ],
-            value="age",
         ), 
         html.Br(),
         html.Label(className="select-label", children="Select Visitation Category"),
@@ -101,7 +100,7 @@ layout = html.Div(className="main-row", children=[
 # cascading plot dropdown
 @callback(
     Output('plot-basis', 'options'),
-    [Input('plot-comparator', 'value')]
+    [Input('plot-comparator', 'value')],
 )
 def update_plot_basis(comparator):
     if comparator == "age":
@@ -133,8 +132,6 @@ def grouped_bar(health_auths, comparator, basis):
 
     if (comparator == "age"):
         groups = ["0-14", "15-64", "65+"]
-        if (basis == None):
-            basis ="family medicine" #setting default val
     else:
         groups = ["emergency", "family medicine", "virtual", "hospitalization"]
 
@@ -289,8 +286,6 @@ def graph_update_table(click_data):
 )
 def handle_hover(comparator, basis):
     button_clicked = ctx.triggered_id
-    if (basis == None) and (comparator == "age"):
-        return f"Total Single Visitation Cost (Service Type: family medicine)"
     if (basis is not None) and (button_clicked == 'plot-basis'):
         if (comparator == "age"):
             head = "Service Type:"
@@ -300,4 +295,20 @@ def handle_hover(comparator, basis):
         return f"Total Single Visitation Cost ({head} {basis})"
     else:
         return "Total Single Visitation Cost"
+    
+# reset functionality
+@callback(
+    [Output("multi_slct-ha", "value"),
+     Output('plot-comparator', 'value')],
+    [Input("reset", "n_clicks")]
+)
+def reset_dropdown(n_clicks):
+    if n_clicks and n_clicks > 0:
+        fig = go.Figure()
+        # This callback will reset the dropdown to an empty value
+        return None, None
+    else:
+        # Do nothing if the button is not clicked
+        raise dash.exceptions.PreventUpdate
+
     
