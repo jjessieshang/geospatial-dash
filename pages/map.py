@@ -45,13 +45,13 @@ layout = html.Div(className="map", children=[
         html.P(className="section-title", id="value-description"),
         html.Br(),
 
-        html.Label(className="select-label", children="Aggregated Values for Health Authorities"),
+        html.Label(className="select-label", children="Mean Values Across Health Authorities"),
 
         #aggregated ha table
         html.Br(),
         dash_table.DataTable(
             id="ha_table",
-            style_table={ 'overflowY': 'auto', 'font-size': '.9rem'},
+            style_table={ 'overflowY': 'auto', 'font-size': '.9rem', 'padding-top':'1rem'},
             style_cell={'textAlign': 'left'},
             cell_selectable=False,
             style_data={
