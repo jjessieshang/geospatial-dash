@@ -25,7 +25,7 @@ layout = html.Div(className="main-row", children=[
         # dropdown menus
         html.Label(className="select-label", children="Select Health Authorities"),
         # multi select?
-        dcc.Dropdown(className="options", id="multi_slct-ha",
+        dcc.Dropdown(className="options-map", id="multi_slct-ha",
             options=[
                 {"label": "Northern", "value": "Northern"},
                 {"label": "Interior", "value": "Interior"},
@@ -70,8 +70,8 @@ layout = html.Div(className="main-row", children=[
                     html.Hr(),
                     dash_table.DataTable(
                     id="table",
-                    style_table={'height': '550px', 'overflowY': 'auto', 'font-size': '.9rem'},
-                    style_cell={'textAlign': 'left'},
+                    style_table={'height': '550px', 'overflowY': 'auto', 'font-size': '.8rem'},
+                    style_cell={'textAlign': 'left', 'padding': '6px'},
                     cell_selectable=False,
                     style_data={
                         'color': 'black',
@@ -271,8 +271,8 @@ def graph_update_table(click_data):
     else:
         # Return an empty table with a 2x2 structure
         empty_table_data = {
-            'Column 1': ['', ''],
-            'Column 2': ['', '']
+            'Cost Category': ['', ''],
+            'Amount': ['', '']
         }
         empty_table = pd.DataFrame(empty_table_data)
 

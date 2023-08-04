@@ -45,7 +45,7 @@ layout = html.Div(className="map", children=[
                 value="distance",
                 multi=False,
         ),
-        html.P(className="section-title", id="value-description"),
+        html.P(className="ha-table-title", id="value-description"),
         html.Br(),
 
         html.Label(className="select-label", children="Mean Values Across Health Authorities"),
@@ -54,8 +54,8 @@ layout = html.Div(className="map", children=[
         html.Br(),
         dash_table.DataTable(
             id="ha_table",
-            style_table={ 'overflowY': 'auto', 'font-size': '.9rem', 'padding-top':'1rem'},
-            style_cell={'textAlign': 'left'},
+            style_table={ 'overflowY': 'auto', 'font-size': '.8rem', 'padding-top':'1rem'},
+            style_cell={'textAlign': 'left', 'padding': '6px'},
             cell_selectable=False,
             style_data={
                 'color': 'black',
@@ -104,7 +104,7 @@ def update_geospatial(measure):
         columns=[
                 {"name": col, "id": col} for col in ha_mean_distances.columns
             ]
-        description = "Mean street distance in km to travel to nearest ED"
+        description = "*Mean street distance in km to travel to nearest ED"
 
         if (measure == "duration"):
             merged_df = pd.merge(df_distances[['CHSA_Name', 'Street duration']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
@@ -113,7 +113,7 @@ def update_geospatial(measure):
             columns=[
                 {"name": col, "id": col} for col in ha_mean_durations.columns
             ]
-            description = "Mean duration in minutes to travel to nearest ED, accounting for traffic data"
+            description = "*Mean duration in minutes to travel to nearest ED, accounting for traffic data"
 
         # Generate the choropleth map
         fig = px.choropleth_mapbox(merged_df, geojson=jdata,

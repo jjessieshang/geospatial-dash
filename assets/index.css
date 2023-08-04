@@ -66,14 +66,14 @@ label {
 
 .column1 {
     display: table-cell;
-    width: 32%;
+    width: 36%;
     background-color: #f9f9f9;  
     padding: 0 2rem;  
 }
 
 .column2 {
     display: table-cell;
-    width: 68%;
+    width: 64%;
     background-color: #eee;
     padding: 0 1rem;
 }
@@ -97,8 +97,9 @@ label {
 }
 
 .section-title {
-    color: #00A7E1
+    color: #00A7E1;
 }
+
 .options {
     padding-top: .5rem;
     font-size: .9rem;
@@ -127,6 +128,8 @@ label {
 .table {
     background-color: #Ffffff;
     padding: 0 1.2rem;
+    font-family: Arial, sans-serif;
+    font-size: .8rem;
 }
 
 .cost-table {
