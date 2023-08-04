@@ -1,8 +1,9 @@
-import dash
+
 import json
 from dash import html, dcc, dash_table, callback, Input, Output
 import pandas as pd
 import plotly.express as px  # (version 4.7.0 or higher)
+import dash
 
 dash.register_page(__name__)
 
@@ -21,28 +22,10 @@ df_distances = pd.read_csv("data/Geospatial Data/CHSA-to-Hosp-distances.csv", de
 ha_mean_distances = pd.read_csv("data/Geospatial Data/HealthAuthority_Distances.csv", delimiter=",", encoding="utf-8", header=0)
 ha_mean_durations = pd.read_csv("data/Geospatial Data/HealthAuthority_Durations.csv", delimiter=",", encoding="utf-8", header=0)
 
-# Create a DataFrame with 'id' and 'value' columns
+    # Create a DataFrame with 'id' and 'value' columns
 data = {'CHSA_Name': [feature['properties']['CHSA_Name'] for feature in jdata['features']]}
 
 gdf = pd.DataFrame(data)
-merged_df = pd.merge(df_distances[['CHSA_Name', 'Street distance (km)']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
-
-# Plot the choropleth map
-fig7 = px.choropleth_mapbox(merged_df, geojson=jdata,
-                           featureidkey='properties.CHSA_Name',
-                           locations='CHSA_Name',
-                           color='Street distance (km)',
-                           mapbox_style='white-bg',
-                           center={"lat": 55, "lon": -127.6476},  # Set the center of the map
-                           zoom=4,  # Set the initial zoom level
-                           height=600,
-                           color_continuous_scale='blues',
-                           )
-
-fig7.update_layout(
-    margin=dict(t=0, b=50, l=50, r=30),
-)
-
 # ------------------------------------------------------------------------------
 layout = html.Div(className="map", children=[
     html.Div(className="column1", children=[
@@ -67,11 +50,7 @@ layout = html.Div(className="map", children=[
         html.Br(),
         dash_table.DataTable(
             id="ha_table",
-            data=ha_mean_distances.to_dict('records'),
-            columns=[
-                {"name": col, "id": col} for col in ha_mean_distances.columns
-            ],
-            style_table={'height': '550px', 'overflowY': 'auto', 'font-size': '.9rem'},
+            style_table={ 'overflowY': 'auto', 'font-size': '.9rem'},
             style_cell={'textAlign': 'left'},
             cell_selectable=False,
             style_data={
@@ -90,27 +69,60 @@ layout = html.Div(className="map", children=[
                 'fontWeight': 'bold'
             }
         ),
-        html.P(className="section-title", id="text"),
+        html.H3(className="component-title", id="text1"),
     ]),
     html.Div(className="column2", children=[
         # choropleth map
         html.Div(className="plot", children=[
             html.H3(className="component-title", id="plot-title", children="CHSA map of british columbia"),
             html.Hr(),
-            dcc.Graph(figure=fig7),
+            dcc.Graph(id='choropleth'),
         ]),
     ]),
 ])
 
 #-----------------------
 
-# costs table entries
-# @callback(
-#     [Output("text", "children")],
-#     [Input("multi_slct-ha1", "value")]
-# )
-# def graph_update_text(selected_value):
-#     if selected_value is not None:
-#         return [f"Selected value: {selected_value}"]
-#     else:
-#         return ["Select a value from the dropdown"]
+# map parameter   
+@callback(
+    [Output("choropleth", "figure"),
+     Output("ha_table", "data"),
+     Output("ha_table", "columns")], 
+    [Input("multi_slct-ha1", "value")]
+    
+)
+def update_geospatial(measure):
+        merged_df = pd.merge(df_distances[['CHSA_Name', 'Street distance (km)']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
+        measure_name = 'Street distance (km)'
+        table_data = ha_mean_distances.to_dict('records')
+        columns=[
+                {"name": col, "id": col} for col in ha_mean_distances.columns
+            ]
+
+        if (measure == "duration"):
+            merged_df = pd.merge(df_distances[['CHSA_Name', 'Street duration']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
+            measure_name = 'Street duration'
+            table_data = ha_mean_durations.to_dict('records')
+            columns=[
+                {"name": col, "id": col} for col in ha_mean_durations.columns
+            ]
+
+        # Generate the choropleth map
+        fig = px.choropleth_mapbox(merged_df, geojson=jdata,
+                                featureidkey='properties.CHSA_Name',
+                                locations='CHSA_Name',
+                                color=measure_name,
+                                mapbox_style='white-bg',
+                                center={"lat": 55, "lon": -127.6476},  # Set the center of the map
+                                zoom=4,  # Set the initial zoom level
+                                height=600,
+                                color_continuous_scale='blues',
+                                )
+
+        fig.update_layout(
+            margin=dict(t=0, b=50, l=50, r=30),
+        )
+
+        # Generate table entries
+
+        return fig, table_data, columns

@@ -296,12 +296,3 @@ def handle_hover(comparator, basis):
     else:
         return "Total Single Visitation Cost"
     
-# @callback(
-#     [Output("text", "children")],
-#     [Input("multi_slct-ha1", "value")]
-# )
-# def graph_update_text(text):
-#     if text is not None:
-#         return [f"Selected value: {text}"]
-#     else:
-#         return ["Select a value from the dropdown"]
