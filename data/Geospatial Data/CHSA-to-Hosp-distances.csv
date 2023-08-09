@@ -7,7 +7,7 @@ North Mission,Mission Memorial Hospital,Fraser,29.76,44.62,29.76,257.46,14.87,22
 Fort St. James North,Lakes District Hospital and Health Centre,Northern,120.51,145.8,120.51,217.87,25.29,97.36,No
 Agassiz/Harrison,Chilliwack General Hospital,Fraser,60.4,110.54,60.4,213.49,50.14,153.09,No
 qathet Rural,Powell River General Hospital,Vancouver Coastal,49.36,82.97,49.36,197.11,33.62,147.75,No
-Howe Sound Rural,Whistler Health Care Centre,Vancouver Coastal,20.87,36.92,20.87,191.06,16.05,170.18,No
+Pemberton,Whistler Health Care Centre,Vancouver Coastal,20.87,36.92,20.87,191.06,16.05,170.18,No
 West Cariboo,Alexis Creek Health Centre,Interior,44.24,81.27,44.24,186.5,37.02,142.25,No
 Telegraph Creek,Stikine Health Centre,Northern,112.62,153.04,112.62,179.76,40.42,67.14,No
 West Coast,Tofino General Hospital,Vancouver Island,17.79,67.88,17.79,178.41,50.1,160.62,No
@@ -54,7 +54,8 @@ Lower Thompson,Barriere Health Centre,Interior,19.79,27.75,19.79,49.8,7.96,30.01
 Merritt,Nicola Valley Hospital and Health Centre,Interior,16.3,32.43,16.3,47.55,16.14,31.25,No
 Peace River South Rural,Tumbler Ridge Health Centre,Northern,28.9,48.37,28.9,45.37,19.48,16.47,No
 Summerland,Penticton Regional Hospital,Interior,25.64,35.51,25.64,44.15,9.87,18.52,Yes
-McBride/Valemount,McBride and District Hospital,Northern,36.77,45.12,36.77,43.78,8.35,7.01,Yes
+McBride,McBride and District Hospital,Northern,36.77,45.12,36.77,43.78,8.35,7.01,Yes
+Valemount,McBride and District Hospital,Northern,36.77,45.12,36.77,43.78,8.35,7.01,Yes
 Sooke,Victoria General Hospital,Vancouver Island,20.82,32.33,20.82,43.54,11.51,22.72,No
 Bella Coola Valley,Bella Coola General Hospital,Vancouver Coastal,27.95,31.92,27.95,42.96,3.97,15.01,Yes
 Qualicum Beach,West Coast General Hospital,Vancouver Island,27.76,39.66,27.76,41.42,11.9,13.66,No
@@ -83,7 +84,8 @@ North Vancouver DM - Central,Lions Gate Hospital,Vancouver Coastal,4.79,9.24,4.7
 Creston,Creston Valley Hospital and Health Centre,Interior,17.21,18.9,17.21,24.34,1.69,7.13,Yes
 Chemainus,Cowichan District Hospital,Vancouver Island,15.9,19.77,15.9,23.41,3.87,7.5,Yes
 Glenmore,Kelowna General Hospital,Interior,10.68,17.75,10.68,23.36,7.08,12.68,Yes
-Central Okanagan Rural,Kelowna General Hospital,Interior,11.08,18,11.08,23.03,6.92,11.95,Yes
+Central Okanagan Rural East,Kelowna General Hospital,Interior,11.08,18,11.08,23.03,6.92,11.95,Yes
+Central Okanagan Rural West,Kelowna General Hospital,Interior,11.08,18,11.08,23.03,6.92,11.95,Yes
 Bowen Island/Lions Bay,Lions Gate Hospital,Vancouver Coastal,17.15,24.16,17.15,22.72,7.01,5.57,Yes
 Salmon Arm,Shuswap Lake General Hospital,Interior,22.86,26.81,22.86,22.34,3.95,-0.52,Yes
 Port Hardy/Port Alice,Port Alice Health Centre,Vancouver Island,14.1,21.74,14.1,22.06,7.64,7.95,Yes
@@ -117,7 +119,8 @@ North Langley Township,Langley Memorial Hospital,Fraser,6.73,9.8,6.73,12.17,3.06
 Central Coast,R.W. Large Memorial Hospital,Vancouver Coastal,9.45,6.3,9.45,12.12,-3.15,2.66,Yes
 North Vancouver DM - West,Lions Gate Hospital,Vancouver Coastal,5.56,6.73,5.56,11.87,1.16,6.3,Yes
 Salt Spring Island,Lady Minto/Gulf Islands Hospital,Vancouver Island,5.38,9.49,5.38,11.87,4.12,6.49,Yes
-Port Moody/Anmore/Belcarra,Eagle Ridge Hospital,Fraser,5.23,7.51,5.23,11.48,2.28,6.25,Yes
+Port Moody North/Anmore/Belcarra,Eagle Ridge Hospital,Fraser,5.23,7.51,5.23,11.48,2.28,6.25,Yes
+Port Moody South,Eagle Ridge Hospital,Fraser,5.23,7.51,5.23,11.48,2.28,6.25,Yes
 Tsawwassen,Delta Hospital,Fraser,6.74,9.47,6.74,11.47,2.74,4.73,Yes
 Gilmore/Shellmont/East/Hamilton,Richmond Hospital,Vancouver Coastal,6.2,8.28,6.2,11.29,2.09,5.09,Yes
 Willoughby,Langley Memorial Hospital,Fraser,5.68,8.19,5.68,11.22,2.52,5.55,Yes
@@ -137,7 +140,8 @@ East and West Cambie/Bridgeport,Richmond Hospital,Vancouver Coastal,4.91,6.28,4.
 Quadra/Swan Lake,Royal Jubilee Hospital,Vancouver Island,4.35,5.83,4.35,9.97,1.49,5.62,Yes
 Victoria-Fraserview,Burnaby Hospital,Vancouver Coastal,4.68,5.67,4.68,9.81,0.99,5.13,Yes
 Ladner,Delta Hospital,Fraser,3.28,6.63,3.28,9.37,3.35,6.09,Yes
-Burnaby Northeast,Royal Columbian Hospital,Fraser,5.15,6.5,5.15,9.25,1.35,4.1,Yes
+Westridge/Sperling/Gov't Road,Royal Columbian Hospital,Fraser,5.15,6.5,5.15,9.25,1.35,4.1,Yes
+Burnaby Mountain/Lougheed,Royal Columbian Hospital,Fraser,5.15,6.5,5.15,9.25,1.35,4.1,Yes
 East Newton,Surrey Memorial Hospital,Fraser,4.83,6.92,4.83,9.24,2.1,4.42,Yes
 Gordon Head/Shelbourne,Royal Jubilee Hospital,Vancouver Island,4.29,5.51,4.29,9.23,1.23,4.94,Yes
 Powell River City,Powell River General Hospital,Vancouver Coastal,1.49,1.74,1.49,9.14,0.25,7.64,Yes
@@ -147,7 +151,8 @@ Southwest Coquitlam,Eagle Ridge Hospital,Fraser,2.2,4.16,2.2,8.93,1.95,6.73,Yes
 Southern Okanagan,South Okanagan General Hospital,Interior,7.13,5.84,7.13,8.9,-1.29,1.78,Yes
 Sidney,Saanich Peninsula Hospital,Vancouver Island,6.43,8.17,6.43,8.74,1.74,2.31,Yes
 Sunset,BC Children's Hospital,Vancouver Coastal,3.68,4.83,3.68,8.72,1.15,5.04,Yes
-Burnaby Southeast,Royal Columbian Hospital,Fraser,3.53,4.69,3.53,8.68,1.16,5.15,Yes
+Kingsway/Edmonds,Royal Columbian Hospital,Fraser,3.53,4.69,3.53,8.68,1.16,5.15,Yes
+Buckingham/Lakeview/Cariboo/Second Street,Royal Columbian Hospital,Fraser,3.53,4.69,3.53,8.68,1.16,5.15,Yes
 Killarney,Burnaby Hospital,Vancouver Coastal,3.83,5.15,3.83,8.62,1.32,4.79,Yes
 Abbotsford Rural,Abbotsford Regional Hospital and Cancer Centre,Fraser,3.55,5.71,3.55,8.59,2.17,5.05,Yes
 Whistler,Whistler Health Care Centre,Vancouver Coastal,4.38,5.52,4.38,8.57,1.14,4.19,Yes
@@ -168,13 +173,18 @@ Brookswood/Murrayville,Langley Memorial Hospital,Fraser,2.6,5.34,2.6,7.37,2.74,4
 City of Langley,Langley Memorial Hospital,Fraser,3.39,5.56,3.39,7.35,2.17,3.95,Yes
 South Surrey,Peace Arch Hospital,Fraser,2.31,4.66,2.31,7.17,2.35,4.86,Yes
 Broadmoor,Richmond Hospital,Vancouver Coastal,3.1,4.55,3.1,7.12,1.46,4.03,Yes
-Burnaby Southwest,Burnaby Hospital,Fraser,3.5,4.5,3.5,6.9,1,3.4,Yes
+South Slope/Big Bend,Burnaby Hospital,Fraser,3.5,4.5,3.5,6.9,1,3.4,Yes
+Garden Village/Cascade/Douglas/Gilpin,Burnaby Hospital,Fraser,3.5,4.5,3.5,6.9,1,3.4,Yes
+Metrotown/Marlborough/Windsor,Burnaby Hospital,Fraser,3.5,4.5,3.5,6.9,1,3.4,Yes
 West Abbotsford,Abbotsford Regional Hospital and Cancer Centre,Fraser,2.96,4.33,2.96,6.78,1.37,3.82,Yes
 Downtown Victoria/Vic West,Royal Jubilee Hospital,Vancouver Island,3.22,3.33,3.22,6.62,0.11,3.4,Yes
-Burnaby Northwest,Burnaby Hospital,Fraser,3.19,4.19,3.19,6.55,0.99,3.35,Yes
+Burnaby Heights/Capital Hill,Burnaby Hospital,Fraser,3.19,4.19,3.19,6.55,0.99,3.35,Yes
+Brentwood/Willingdon/Parkcrest,Burnaby Hospital,Fraser,3.19,4.19,3.19,6.55,0.99,3.35,Yes
 Shaughnessy/Arbutus Ridge/Kerrisdale,BC Children's Hospital,Vancouver Coastal,2.8,3.69,2.8,6.47,0.89,3.67,Yes
 Comox,North Island Hospital Comox Valley,Vancouver Island,1.84,2.02,1.84,6.34,0.19,4.5,Yes
-New Westminster,Royal Columbian Hospital,Fraser,2.77,3.91,2.77,6.34,1.14,3.57,Yes
+New Westminster - East,Royal Columbian Hospital,Fraser,2.77,3.91,2.77,6.34,1.14,3.57,Yes
+New Westminster - Central,Royal Columbian Hospital,Fraser,2.77,3.91,2.77,6.34,1.14,3.57,Yes
+New Westminster - West/Queensborough,Royal Columbian Hospital,Fraser,2.77,3.91,2.77,6.34,1.14,3.57,Yes
 Vernon Centre/Coldstream,Vernon Jubilee Hospital,Interior,2.7,3.99,2.7,6.28,1.29,3.57,Yes
 Interurban/Tillicum,Victoria General Hospital,Vancouver Island,1.51,2.65,1.51,6.21,1.15,4.7,Yes
 Terrace City Centre,Mills Memorial Hospital,Northern,1.92,4.2,1.92,6.11,2.28,4.19,Yes
