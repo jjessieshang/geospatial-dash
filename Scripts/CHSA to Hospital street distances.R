@@ -11,7 +11,7 @@ pacman::p_load(osrm, plyr, tidyverse, sf, leaflet, fontawesome, GGally)
 # Load data ---------------------------------------------------------------
 
 ### hospital data with coordinates
-hosp <- read_csv('Mapping/Hospitals/hlbc_emergencyrooms.csv')
+hosp <- read_csv('Data/Geospatial Data/hlbc_emergencyrooms.csv')
 
 # remove extra row for surrey memorial
 hosp <- hosp %>% group_by(Facility) %>% slice(1) %>% ungroup()
@@ -23,11 +23,11 @@ hosp$Facility <- iconv(x=hosp$Facility, from = "UTF-8", to = "UTF-8", sub = "")
 hosp.labs <- sprintf("%s", hosp$Facility) %>% lapply(htmltools::HTML)
 
 # Family medicine data with coordinates
-# fmed <- read_csv('Mapping/FM Clinic List_IanCooper_csv.csv')
+# fmed <- read_csv('Data/Geospatial Data/FM Clinic List.csv')
 # fmed.labs <- sprintf("%s", fmed$ID) %>% lapply(htmltools::HTML)
 
 ### CHSA shapefile data
-chsa <- st_read('Mapping/CHSA_2018/CHSA_2018.shp')
+chsa <- st_read('Data/Geospatial Data/CHSA_2018/CHSA_2018.shp')
 
 # transform, add colour palette, labels
 chsa <- st_transform(chsa, crs = 'WGS84')
@@ -188,10 +188,10 @@ all.trips <- hosp.chsa.combined %>%
   })
 
 ### SAVE OSRM output
-write_rds(all.trips, 'Mapping/CHSA-to-Hosp-distances_OSRM-output-all.RDS')
+write_rds(all.trips, 'Data/Geospatial Data/CHSA-to-Hosp-distances_OSRM-output-all.RDS')
 
 ### READ in SAVED output
-all.trips <- read_rds('mapping/CHSA-to-Hosp-distances_OSRM-output-all.RDS')
+all.trips <- read_rds('Data/Geospatial Data/CHSA-to-Hosp-distances_OSRM-output-all.RDS')
 
 ## OLD - for trip option above
 # # remove 50% of trips where hospital is the start
@@ -420,8 +420,8 @@ all.trips.nogeo %>%
           lower = list(continuous = wrap("smooth", alpha = 0.3, size = 0.1, se = F)))
 
 # save data
-# write_rds(all.trips.nogeo, 'Mapping/CHSA-to-Hosp-distances.RDS')
-# write_csv(all.trips.nogeo, 'Mapping/CHSA-to-Hosp-distances.csv')
+# write_rds(all.trips.nogeo, 'Data/Geospatial Data/CHSA-to-Hosp-distances.RDS')
+# write_csv(all.trips.nogeo, 'Data/Geospatial Data/CHSA-to-Hosp-distances.csv')
 
 # TEST-old ----------------------------------------------------------------
 

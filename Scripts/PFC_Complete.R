@@ -2,7 +2,7 @@ library(tidyverse)
 
 # Load Data
 
-traveldata <- read_csv('HA_distance_duration.csv')
+traveldata <- read_csv('Data/Geospatial Data/HA_distance_duration.csv')
 
 # Set Desired Constants
 
