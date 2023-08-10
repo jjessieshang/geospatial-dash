@@ -27,6 +27,8 @@ data = {'CHSA_Name': [feature['properties']['CHSA_Name'] for feature in jdata['f
 gdf = pd.DataFrame(data)
 
 
+
+
 # ------------------------------------------------------------------------------
 layout = html.Div(className="map", children=[
     html.Div(className="column1", children=[
@@ -54,6 +56,8 @@ layout = html.Div(className="map", children=[
         html.Br(),
         dash_table.DataTable(
             id="ha_table",
+            row_selectable='single',  # Allow selecting only one row
+            selected_rows=[],  # Initialize selected_rows as an empty list
             style_table={ 'overflowY': 'auto', 'font-size': '.8rem', 'padding-top':'1rem'},
             style_cell={'textAlign': 'left', 'padding': '6px'},
             cell_selectable=False,
@@ -73,7 +77,9 @@ layout = html.Div(className="map", children=[
                 'fontWeight': 'bold'
             }
         ),
-        html.H3(className="component-title", id="text1"),
+
+        #reset map button
+        html.Button("Reset Map", id="clear_selection_button", className="reset"),
     ]),
     html.Div(className="column2", children=[
         # choropleth map
@@ -94,11 +100,18 @@ layout = html.Div(className="map", children=[
      Output("ha_table", "data"),
      Output("ha_table", "columns"),
      Output("value-description", "children"),], 
-    [Input("multi_slct-ha1", "value")]
+    [Input("multi_slct-ha1", "value"),
+     Input("ha_table", "selected_rows")]
     
 )
-def update_geospatial(measure):
-        merged_df = pd.merge(df_distances[['CHSA_Name', 'Street distance (km)']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
+def update_geospatial(measure, row):
+        dff_distances  = df_distances
+        # Filter merged_df to include only CHSAs with 'Health Authority' name 'Fraser'
+        if (len(row) > 0) :
+             print(ha_mean_distances.iloc[row[0]]['Health Authority'])
+             dff_distances = df_distances[df_distances['HA'] == ha_mean_distances.iloc[row[0]]['Health Authority']]
+
+        merged_df = pd.merge(dff_distances[['CHSA_Name', 'Street distance (km)']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
         measure_name = 'Street distance (km)'
         table_data = ha_mean_distances.to_dict('records')
         columns=[
@@ -107,7 +120,7 @@ def update_geospatial(measure):
         description = "*Mean street distance in km to travel to nearest ED"
 
         if (measure == "duration"):
-            merged_df = pd.merge(df_distances[['CHSA_Name', 'Street duration']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
+            merged_df = pd.merge(dff_distances[['CHSA_Name', 'Street duration']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
             measure_name = 'Street duration'
             table_data = ha_mean_durations.to_dict('records')
             columns=[
@@ -120,7 +133,7 @@ def update_geospatial(measure):
                                 featureidkey='properties.CHSA_Name',
                                 locations='CHSA_Name',
                                 color=measure_name,
-                                mapbox_style='white-bg',
+                                mapbox_style="carto-positron",
                                 center={"lat": 55, "lon": -127.6476},  # Set the center of the map
                                 zoom=3.5,  # Set the initial zoom level
                                 height=600,
@@ -131,3 +144,21 @@ def update_geospatial(measure):
             margin=dict(t=0, b=50, l=50, r=30),
         )
         return fig, table_data, columns, description
+
+@callback(
+    Output("ha_table", "selected_rows"),
+    Input("clear_selection_button", "n_clicks"),
+)
+def clear_table_selection(n_clicks):
+    if n_clicks is None:
+        # No button click, return the current selected rows
+        return dash.callback_context.states["ha_table.selected_rows"]
+
+    # Button was clicked, reset the selected rows to an empty list
+    return []
+
+
+
+
+
+
