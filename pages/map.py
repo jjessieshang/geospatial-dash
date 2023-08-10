@@ -108,7 +108,6 @@ def update_geospatial(measure, row):
         dff_distances  = df_distances
         # Filter merged_df to include only CHSAs with 'Health Authority' name 'Fraser'
         if (len(row) > 0) :
-             print(ha_mean_distances.iloc[row[0]]['Health Authority'])
              dff_distances = df_distances[df_distances['HA'] == ha_mean_distances.iloc[row[0]]['Health Authority']]
 
         merged_df = pd.merge(dff_distances[['CHSA_Name', 'Street distance (km)']], gdf[['CHSA_Name']], on='CHSA_Name', how='right')
