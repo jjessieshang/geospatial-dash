@@ -107,5 +107,3 @@ PFC.ed <- function (wage, distance, duration, age, meal, parking, acuity) {
   
 }
 
-PFC.ed (30.54, 69.4, 1.56, 30, 15, 2, 2)
-
