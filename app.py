@@ -18,7 +18,7 @@ app.layout = html.Div(className="main-content", children=[
         )
         for page in dash.page_registry.values()
     ]),
-    dash.page_container
+    dash.page_container 
 ])
 
 # ------------------------------------------------------------------------------
