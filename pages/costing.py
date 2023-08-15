@@ -1,10 +1,11 @@
 import pandas as pd
 import plotly.graph_objects as go
-from dash import dcc, html, Input, Output, dash_table, ctx, callback  # pip install dash (version 2.0.0 or higher) 
 import dash
+from dash import dcc, html, Input, Output, dash_table, ctx, callback, State  # pip install dash (version 2.0.0 or higher) 
 import dash_bootstrap_components as dbc
 
-dash.register_page(__name__,path='/', external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+dash.register_page(__name__,path='/')
 
 # ---------------------------------------------------------------------------------
 
@@ -22,17 +23,6 @@ layout = html.Div(className="main-row", children=[
                 children=["Visitation Cost Analysis"]),
         html.P(className="section-description", 
             children=["Explore the estimated costs that patients and their families pay for four types of care across British Columbia. Click on the bar graph to view a breakdown of the visitation costs."]),
-            dbc.Button("Open modal", id="open"),
-            dbc.Modal(
-                [
-                    dbc.ModalHeader("HEADER"),
-                    dbc.ModalBody("BODY OF MODAL"),
-                    dbc.ModalFooter(
-                        dbc.Button("CLOSE BUTTON", id="close", className="ml-auto")
-                    ),
-                ],
-                id="modal",
-            ),
         html.Br(),
         # dropdown menus
         html.Label(className="select-label", children="Select Health Authorities"),

@@ -9,6 +9,9 @@ h1 {
     font-weight: 700;
     font-family: 'Open Sans', sans-serif;
     padding-left: .8rem;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    font-size: 2rem;
 }
 
 h3 {
@@ -42,6 +45,8 @@ label {
     padding: .5rem 2rem;
     font-weight:lighter;
     font-size: .9rem;
+    justify-content: space-between;
+    align-items: center;
   }
 
 .navbar-link {
@@ -50,6 +55,12 @@ label {
     text-decoration: none;
     cursor: pointer;
     margin-right: 20px;
+}
+
+.help {
+    text-decoration: none;
+    background-color: none;
+    border-radius: 50px;
 }
 
 
