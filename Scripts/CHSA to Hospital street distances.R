@@ -22,10 +22,6 @@ hosp$Facility <- iconv(x=hosp$Facility, from = "UTF-8", to = "UTF-8", sub = "")
 # labels for mapping
 hosp.labs <- sprintf("%s", hosp$Facility) %>% lapply(htmltools::HTML)
 
-# Family medicine data with coordinates
-# fmed <- read_csv('Data/Geospatial Data/FM Clinic List.csv')
-# fmed.labs <- sprintf("%s", fmed$ID) %>% lapply(htmltools::HTML)
-
 ### CHSA shapefile data
 chsa <- st_read('Data/Geospatial Data/CHSA_2018/CHSA_2018.shp')
 
@@ -120,42 +116,6 @@ qplot(hosp.chsa.combined$dist.hav)
 # add combined CHSA/hosp name for matching later
 hosp.chsa.combined <- hosp.chsa.combined %>% 
   mutate(CHSA.Facility = paste(CHSA_Name, Facility, sep = ' - '))
-
-
-## Family Medicine - Haversine Distance
-
-# Create pairs with CHSA
-fmed.chsa.combined <- expand.grid(chsa.centroids$CHSA_Name, fmed$ID)
-# join coordinate columns
-fmed.chsa.combined <- fmed.chsa.combined %>% 
-  select(CHSA_Name = Var1, ID = Var2) %>% 
-  left_join(., chsa.centroids %>% select(CHSA_Name, chsa.long = long, chsa.lat = lat)) %>% 
-  left_join(., fmed %>% select(ID, fmed.long = GEO_LONGITUDE, fmed.lat = GEO_LATITUDE))
-
-### haversine dist
-# for each CHSA-fmed pair, calculate haversine distance and keep closest [5??]
-fmed.chsa.combined <- fmed.chsa.combined %>% 
-  ddply(., .(CHSA_Name), function(x){
-    x$dist.hav <- geosphere::distHaversine(x[ , c('chsa.long', 'chsa.lat')], 
-                                           x[ , c('fmed.long', 'fmed.lat')])
-    x <- x %>% 
-      ## convert distances to km
-      mutate(dist.hav = dist.hav / 1000) %>% 
-      arrange(dist.hav) %>% 
-      slice(1:5)
-    return(x)
-  })
-
-# check returned distances -- note distances are in kilometres
-summary(fmed.chsa.combined)
-fmed.chsa.combined %>% arrange(dist.hav) %>% head(10)
-fmed.chsa.combined %>% arrange(dist.hav) %>% tail(10)
-# ggplot(fmed.chsa.combined, aes(dist.hav)) + geom_boxplot()
-qplot(fmed.chsa.combined$dist.hav)
-
-# add combined CHSA/fmed name for matching later
-fmed.chsa.combined <- fmed.chsa.combined %>% 
-  mutate(CHSA.Facility = paste(CHSA_Name, ID, sep = ' - '))
 
 # Calculate street distances ----------------------------------------------
 
