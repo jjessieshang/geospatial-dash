@@ -72,7 +72,6 @@ label {
 .main-content {
     width: 100%;
     margin: auto;
-    padding-bottom: 50px;
 }
 
 .column1 {
@@ -134,6 +133,8 @@ label {
 .plot {
     background-color: #Ffffff;
     padding: 0 1.2rem;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .table {
@@ -144,7 +145,27 @@ label {
 }
 
 .cost-table {
-    height: '550px'; 
+    height: '300px'; 
     overflow-y: auto;
     text-align: left;
 }
+
+.img-fluid {
+    padding: 15px 30px;
+}
+
+.footer {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 0;
+    text-align: center;
+    padding-top: 50px;
+  }
+  
+  /* Add margin to separate the footer items */
+  .footer p {
+    margin: 0 10px;
+  }

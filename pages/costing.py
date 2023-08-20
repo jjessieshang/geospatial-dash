@@ -72,7 +72,7 @@ layout = html.Div(className="main-row", children=[
                     html.Hr(),
                     dash_table.DataTable(
                     id="table",
-                    style_table={'height': '550px', 'overflowY': 'auto', 'font-size': '.8rem'},
+                    style_table={'height': '300px', 'overflowY': 'auto', 'font-size': '.8rem'},
                     style_cell={'textAlign': 'left', 'padding': '6px'},
                     cell_selectable=False,
                     style_data={

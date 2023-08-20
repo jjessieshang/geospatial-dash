@@ -21,16 +21,38 @@ app.layout = html.Div(className="main-content", children=[
         html.Button(" ? ", id="open", className="help"),  # Apply the same class as page links
         dbc.Modal(
             [
-                dbc.ModalHeader("HEADER"),
-                dbc.ModalBody("BODY OF MODAL"),
+                dbc.ModalHeader("Need Help?"),
+                dbc.ModalBody(children=[
+                    html.H3("Costing Page"),
+                    html.P("Customize the analysis using the left panel - select the health authorities of interest, comparison parameters, and cost visitation category. Then interact with the graph to view detailed information."),
+                    html.P("Age: cost sharing varies across age categories"),
+                    html.P("Visitation Type: family practictioner, virtual, etc"),
+                    html.Img(src="assets/graph-instr.jpg", className="img-fluid"),  # Replace with the actual image path
+
+                    html.Br(),
+                    html.Br(),
+                    html.H3("Map Page"),
+                    html.P("Customize the analysis using the left panel - select the health authorities of interest, comparison parameters, and cost visitation category. Then interact with the graph to view detailed information."),
+                    html.P("Distance: Street distance"),
+                    html.P("Duration: Times calculated from real traffic data"),
+                    html.Img(src="assets/map.jpg", className="img-fluid")  # Replace with the actual image path
+                ]),
                 dbc.ModalFooter(
-                    dbc.Button("CLOSE BUTTON", id="close", className="ml-auto")
+                    dbc.Button("Done", id="close", className="ml-auto")
                 ),
             ],
             id="modal",
-        )
-    ], ),
-    dash.page_container
+            size="lg",
+            scrollable=True,
+        ),
+    ], 
+    ),
+    dash.page_container,
+    html.Footer(className="footer", children=[
+        html.P(html.A("Digital Emergency Medicine", href="https://digem.med.ubc.ca/")),
+        html.P("The University of British Columbia"),
+        html.P("Developed by: Jessie Shang"),
+    ])
 ])
 
 # ------------------------------------------------------------------------------
