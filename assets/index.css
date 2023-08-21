@@ -133,7 +133,7 @@ label {
 .plot {
     background-color: #Ffffff;
     padding: 0 1.2rem;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
     margin-top: 15px;
 }
 
@@ -142,10 +142,10 @@ label {
     padding: 0 1.2rem;
     font-family: Arial, sans-serif;
     font-size: .8rem;
+    padding-bottom: 15px;
 }
 
 .cost-table {
-    height: '300px'; 
     overflow-y: auto;
     text-align: left;
 }

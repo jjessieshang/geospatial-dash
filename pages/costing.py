@@ -21,9 +21,9 @@ layout = html.Div(className="main-row", children=[
     html.Div(className="column1", children=[
         html.H3(className="section-title", 
                 children=["Visitation Cost Analysis"]),
+        html.Br(),
         html.P(className="section-description", 
             children=["Explore the estimated costs that patients and their families pay for four types of care across British Columbia. Click on the bar graph to view a breakdown of the visitation costs."]),
-        html.Br(),
         # dropdown menus
         html.Label(className="select-label", children="Select Health Authorities"),
         # multi select?
@@ -62,7 +62,6 @@ layout = html.Div(className="main-row", children=[
                 html.Hr(),
                 dcc.Graph(id='grouped_bar'),
             ]),
-
             # NEW TABLE
             html.Div(className="table", 
                 children=[
@@ -72,7 +71,7 @@ layout = html.Div(className="main-row", children=[
                     html.Hr(),
                     dash_table.DataTable(
                     id="table",
-                    style_table={'height': '300px', 'overflowY': 'auto', 'font-size': '.8rem'},
+                    style_table={'overflowY': 'auto', 'font-size': '.8rem'},
                     style_cell={'textAlign': 'left', 'padding': '6px'},
                     cell_selectable=False,
                     style_data={
