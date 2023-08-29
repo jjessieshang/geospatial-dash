@@ -8,7 +8,7 @@ app = Dash(__name__,use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
 # ------------------------------------------------------------------------------
 # app layout: contains dash components and html
 app.layout = html.Div(className="main-content", children=[
-    html.H1(children=["cost SHARING FOR HEALTH SERVICES ACROSS BRITISH COLUMBIA"]),
+    html.H1(children=["COST SHARING FOR HEALTH SERVICES ACROSS BRITISH COLUMBIA"]),
     html.Div(className="navbar", children=[
         html.Div([
             dcc.Link(
@@ -25,16 +25,16 @@ app.layout = html.Div(className="main-content", children=[
                 dbc.ModalBody(children=[
                     html.H3("Costing Page"),
                     html.P("Customize the analysis using the left panel - select the health authorities of interest, comparison parameters, and cost visitation category. Then interact with the graph to view detailed information."),
-                    html.P("Age: cost sharing varies across age categories"),
-                    html.P("Visitation Type: family practictioner, virtual, etc"),
+                    html.P("Age: ..."),
+                    html.P("Visitation Type: ..."),
                     html.Img(src="assets/graph-instr.jpg", className="img-fluid"),  # Replace with the actual image path
 
                     html.Br(),
                     html.Br(),
                     html.H3("Map Page"),
-                    html.P("Customize the analysis using the left panel - select the health authorities of interest, comparison parameters, and cost visitation category. Then interact with the graph to view detailed information."),
-                    html.P("Distance: Street distance"),
-                    html.P("Duration: Times calculated from real traffic data"),
+                    html.P("Visualize the differents in healthcare costs across BC"),
+                    html.P("Distance: ..."),
+                    html.P("Duration: ..."),
                     html.Img(src="assets/map.jpg", className="img-fluid")  # Replace with the actual image path
                 ]),
                 dbc.ModalFooter(

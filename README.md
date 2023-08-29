@@ -4,13 +4,20 @@ Geospatial content for Patient and Family costs methods project
 ## About the Dashboard
 This app is developed in Python, HTML, CSS, Javascript and deployed on Google Cloud Run. CD
 
+### Backend
+This dashboard processes data from a csv file using the Pandas, NumPy, and Plotly libraries in Python.
+
+### Frontend
+Pythod Dash, HTML, CSS, Javascript
+
+### Deployment
+Hosted on Google Cloud Run at https://rtvs-dash-kgo36byuna-uw.a.run.app/
+CD Pipeline: changes pushed to the main branch are built and deployed via Google Cloud Build
+
 <!-- GETTING STARTED -->
 ## Getting Started Locally
 
 To get a local copy up and running follow these simple steps.
-
-### Prerequisites
-Anaconda Navigator
 
 ### Installing the Dependencies
 
