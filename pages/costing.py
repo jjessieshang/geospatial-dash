@@ -23,7 +23,7 @@ layout = html.Div(className="main-row", children=[
                 children=["Visitation Cost Analysis"]),
         html.Br(),
         html.P(className="section-description", 
-            children=["Explore the estimated costs that patients and their families pay for four types of care across British Columbia. Click on the bar graph to view a breakdown of the visitation costs."]),
+            children=["EXplore the estimated costs that patients and their families pay for four types of care across British Columbia. Click on the bar graph to view a breakdown of the visitation costs."]),
         # dropdown menus
         html.Label(className="select-label", children="Select Health Authorities"),
         # multi select?
