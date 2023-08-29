@@ -18,6 +18,7 @@ app.layout = html.Div(className="main-content", children=[
             )
             for page in dash.page_registry.values()
         ]),
+        # instructions modal
         html.Button(" ? ", id="open", className="help"),  # Apply the same class as page links
         dbc.Modal(
             [
@@ -27,7 +28,7 @@ app.layout = html.Div(className="main-content", children=[
                     html.P("Customize the analysis using the left panel - select the health authorities of interest, comparison parameters, and cost visitation category. Then interact with the graph to view detailed information."),
                     html.P("Age: ..."),
                     html.P("Visitation Type: ..."),
-                    html.Img(src="assets/graph-instr.jpg", className="img-fluid"),  # Replace with the actual image path
+                    html.Img(src="assets/graph-instr.jpg", className="img-fluid"),
 
                     html.Br(),
                     html.Br(),
@@ -35,7 +36,7 @@ app.layout = html.Div(className="main-content", children=[
                     html.P("Visualize the differents in healthcare costs across BC"),
                     html.P("Distance: ..."),
                     html.P("Duration: ..."),
-                    html.Img(src="assets/map.jpg", className="img-fluid")  # Replace with the actual image path
+                    html.Img(src="assets/map.jpg", className="img-fluid") 
                 ]),
                 dbc.ModalFooter(
                     dbc.Button("Done", id="close", className="ml-auto")
