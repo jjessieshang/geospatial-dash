@@ -8,7 +8,7 @@ app = Dash(__name__,use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
 # ------------------------------------------------------------------------------
 # app layout: contains dash components and html
 app.layout = html.Div(className="main-content", children=[
-    html.H1(children=["COST SHARING FOR HEALTH SERVICES ACROSS BRITISH COLUMBIA"]),
+    html.H1(children=["cost SHARING FOR HEALTH SERVICES ACROSS BRITISH COLUMBIA"]),
     html.Div(className="navbar", children=[
         html.Div([
             dcc.Link(
